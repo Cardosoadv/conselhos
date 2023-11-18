@@ -1,0 +1,11 @@
+<?php
+
+use CodeIgniter\Router\RouteCollection;
+
+/**
+ * @var RouteCollection $routes
+ */
+service('auth')->routes($routes);
+
+ $routes->get('cadastro/admin/', '\Modules\Admin\Controllers\Home::index');
+
