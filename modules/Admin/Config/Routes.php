@@ -7,5 +7,5 @@ use CodeIgniter\Router\RouteCollection;
  */
 service('auth')->routes($routes);
 
- $routes->get('cadastro/admin/', '\Modules\Admin\Controllers\Home::index');
+ $routes->get('admin/', '\Modules\Admin\Controllers\Home::index');
 
