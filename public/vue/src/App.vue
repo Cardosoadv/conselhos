@@ -1,16 +1,16 @@
 <template>
-<primeiro/>
+
+<router-link :to="{name:'home'}">Home</router-link>
+<router-link :to="{name:'login'}">Login</router-link>
+<router-link :to="{name:'dashboard'}">Dashboard</router-link>
+<router-view/>
+
 </template>
 
-<script>
-import primeiro from './components/primeiro.vue';
+<script setup>
 
-
-
-export default {
-  name:'App',
-  components:{
-    primeiro
-  }
-}
 </script>
+
+<style lang="scss" scoped>
+
+</style>
