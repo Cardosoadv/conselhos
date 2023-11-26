@@ -15,6 +15,7 @@ import router from './router'
 createApp(App).use(router).mount('#app')
 
 import 'bootstrap/dist/js/bootstrap.js'
+import 'bootstrap/dist/js/bootstrap.bundle.js'
 import 'jquery/dist/jquery.js'
 import 'jquery'
 import 'jquery-ui/dist/jquery-ui.js'
