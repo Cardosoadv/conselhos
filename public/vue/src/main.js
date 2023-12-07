@@ -1,11 +1,9 @@
-import 'bootstrap/dist/css/bootstrap.css'
-import 'bootstrap'
-import './/assets/dist/css/adminlte.css'
-import './/assets/dist/plugins/icheck-bootstrap/icheck-bootstrap.min.css'
-import './/assets/dist/plugins/jqvmap/jqvmap.min.css'
-import './/assets/dist/plugins/overlayScrollbars/css/OverlayScrollbars.min.css'
-import './/assets/dist/plugins/fontawesome-free/css/all.min.css'
-import './/assets/dist/plugins/ionicons/css/ionicons.min.css'
+import '@fontsource/source-sans-3'
+import 'overlayscrollbars/overlayscrollbars.css';
+import  'bootstrap-icons/font/bootstrap-icons.min.css'
+import 'jsvectormap/dist/css/jsvectormap.min.css'
+import 'bootstrap/dist/css/bootstrap.min.css'
+import './assets/dist/css/adminlte.min.css'
 
 
 import { createApp } from 'vue'
@@ -14,10 +12,9 @@ import router from './router'
 
 createApp(App).use(router).mount('#app')
 
+import 'overlayscrollbars/browser/overlayscrollbars.browser.es6.js'
+import './assets/dist/plugins/popper.min'
 import 'bootstrap/dist/js/bootstrap.js'
-import 'jquery/dist/jquery.js'
-import 'jquery'
-import 'jquery-ui/dist/jquery-ui.js'
-import 'jquery-ui'
-import './/assets/dist/js/adminlte.js'
-import './/assets/dist/plugins/overlayScrollbars/js/jquery.overlayScrollbars.min.js'
+import './assets/dist/js/adminlte.js'
+import './assets/dist/plugins/Sortable.min.js'
+import './assets/dist/plugins/apexcharts.min.js';
