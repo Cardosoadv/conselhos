@@ -18,4 +18,12 @@ class Home extends \CodeIgniter\Controller
     $data['menu'] = $systemModel->findAll();
     return view('dashboard',$data);
     }
+    public function Newsystem(): string
+    {
+    $systemModel = new SystemModel();
+    $data['menu'] = $systemModel->findAll();
+    return view('dashboard',$data);
+    }
+
+
 }

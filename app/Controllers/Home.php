@@ -11,10 +11,4 @@ class Home extends BaseController
         $data['module'] = "Sem modulo";
         return view('welcome_message',$data);
     }
-    public function getSystem(): string
-    {
-    $systemModel = new SystemModel();
-    $data['menu'] = $systemModel->findAll();
-    return view('dashboard',$data);
-    }
 }
