@@ -1,8 +1,7 @@
 <?php
 
 namespace App\Controllers;
-
-use App\Models\SystemModel;
+use App\Models\MessagesModel;
 
 class Home extends BaseController
 {
@@ -11,4 +10,17 @@ class Home extends BaseController
         $data['module'] = "Sem modulo";
         return view('welcome_message',$data);
     }
+
+    public function saveMessage(){
+
+        $MessagesModel = new MessagesModel();
+        $data = [
+        'message' => $this->request->getVar('message'),
+        'sent_user' => $this->request->getVar('sent_user'),
+        'receive_user' => $this->request->getVar('receive_user'),
+        ];    
+        $MessagesModel->insert($data);
+        return $this->response->redirect(site_url('admin'));
+    }
+
 }
