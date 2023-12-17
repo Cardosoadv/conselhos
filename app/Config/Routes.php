@@ -9,6 +9,8 @@ service('auth')->routes($routes);
 
  $routes->get('/', 'Home::index');
 
+ $routes->get('/savemessage', 'Home::saveMessage');
+ $routes->post('/savemessage', 'Home::saveMessage');
 
  /**
  * --------------------------------------------------------------------
