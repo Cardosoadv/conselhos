@@ -11,6 +11,9 @@
     <?= $this->include('template/nav') ?>
     <?= $this->include('template/sidebar') ?>
     <?= $this->include('template/content') ?>
+
+    <?= $this->include('template/modals/change_user_img.php') ?>
+
     <?= $this->include('template/footer') ?>
     </body><!--end::Body-->
 

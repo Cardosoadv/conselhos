@@ -23,4 +23,9 @@ class Home extends BaseController
         return $this->response->redirect(site_url('admin'));
     }
 
+    public function saveUserImg(){
+        $data['img']= $this->request->getFile('foto-perfil');
+
+    }
+
 }
