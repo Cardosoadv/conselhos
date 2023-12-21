@@ -8,7 +8,7 @@
         </button>
       </div>
       <div class="modal-body">
-        <form action="/alterar-foto-perfil" method="post" enctype="multipart/form-data">
+        <form action="<?= base_url('saveuserimg')?>" method="post" enctype="multipart/form-data">
           <div class="mb-3">
             <label for="foto-perfil" class="form-label">Foto de perfil</label>
             <input type="file" class="form-control" id="foto-perfil" name="foto-perfil" required>

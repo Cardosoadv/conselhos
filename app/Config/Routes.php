@@ -12,6 +12,8 @@ service('auth')->routes($routes);
  $routes->get('/savemessage', 'Home::saveMessage');
  $routes->post('/savemessage', 'Home::saveMessage');
 
+ $routes->match(['get','post'],'/saveuserimg','Home::saveUserImg');
+
  /**
  * --------------------------------------------------------------------
  * Include Modules Routes Files

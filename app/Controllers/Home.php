@@ -2,6 +2,7 @@
 
 namespace App\Controllers;
 use App\Models\MessagesModel;
+use App\Models\UserImgModel;
 
 class Home extends BaseController
 {
@@ -25,7 +26,8 @@ class Home extends BaseController
 
     public function saveUserImg(){
         $data['img']= $this->request->getFile('foto-perfil');
-
+        $userimgModel = new UserImgModel();
+        $userimgModel->insert($data);
     }
 
 }
