@@ -4,18 +4,15 @@ namespace App\Models;
 
 use CodeIgniter\Model;
 
-class ConselhoModel extends Model
+class ProfissaoModel extends Model
 {
-    protected $table            = 'conselhos';
+    protected $table            = 'profissoes';
     protected $primaryKey       = 'id';
     protected $useAutoIncrement = true;
     protected $returnType       = 'array';
     protected $useSoftDeletes   = true;
     protected $protectFields    = true;
-    protected $allowedFields    = [
-        'nome', 'sigla', 'sistema_profissoes', 'site', 'email',
-        'logradouro', 'numero', 'bairro', 'cidade', 'estado', 'cep'
-    ];
+    protected $allowedFields    = ['nome', 'conselho_id'];
 
     protected bool $allowEmptyInserts = false;
     protected bool $updateOnlyChanged = true;

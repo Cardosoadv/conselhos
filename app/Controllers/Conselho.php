@@ -3,14 +3,17 @@
 namespace App\Controllers;
 
 use App\Models\ConselhoModel;
+use App\Models\ProfissaoModel;
 
 class Conselho extends BaseController
 {
     private $conselhoModel;
+    private $profissaoModel;
 
     public function __construct()
     {
         $this->conselhoModel = new ConselhoModel();
+        $this->profissaoModel = new ProfissaoModel();
     }
 
     public function index()
@@ -34,6 +37,7 @@ class Conselho extends BaseController
     public function edit($id = null)
     {
         $dado = $this->conselhoModel->find($id);
+        $dado['profissoes'] = $this->profissaoModel->where('conselho_id', $id)->findAll();
         return view('conselho/form', ['conselho' => $dado]);
     }
 

@@ -1,6 +1,6 @@
 <?= $this->extend('template/layout') ?>
 
-<?= $this->section('conteudo') ?>
+<?= $this->section('content') ?>
 <div class="card">
     <div class="card-header">
         <h5 class="card-title">Conselhos</h5>
