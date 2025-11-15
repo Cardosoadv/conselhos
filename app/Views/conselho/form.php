@@ -1,6 +1,6 @@
 <?= $this->extend('template/layout') ?>
 
-<?= $this->section('content') ?>
+<?= $this->section('conteudo') ?>
 <div class="card">
     <div class="card-header">
         <h5 class="card-title"><?= isset($conselho) ? 'Editar Conselho' : 'Novo Conselho' ?></h5>
