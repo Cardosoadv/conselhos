@@ -1,0 +1,178 @@
+/* Regras CSS corrigidas para o Kanban com scroll horizontal funcionando */
+
+/* 1. Controla o overflow geral no body */
+body {
+    overflow: hidden;
+}
+
+/* 2. Garante que o container principal da aplicação gerencie todo o scroll vertical */
+.app-wrapper {
+    overflow-y: auto;
+    overflow-x: hidden;
+}
+
+/* 3. Remove a rolagem duplicada do elemento 'app-main' */
+.app-main {
+    overflow: visible; /* Mudado de 'auto' para 'visible' */
+}
+
+/* 4. CRÍTICO: Configuração principal para o scroll horizontal do kanban */
+.app-content.kanban {
+    height: 100%;
+    display: flex;
+    flex-direction: column;
+}
+
+.app-content.kanban .content {
+    flex-grow: 1;
+    overflow-x: auto; /* Garante o scroll horizontal */
+    overflow-y: hidden; /* Evita scroll vertical no container */
+    display: flex;
+    flex-wrap: nowrap; /* CRÍTICO: Impede quebra de linha */
+    align-items: stretch;
+    gap: 1rem;
+    padding: 1rem;
+    min-height: 0; /* Importante para o flexbox funcionar corretamente */
+}
+
+/* 5. Container fluid dentro do content para scroll horizontal */
+.app-content.kanban .content .container-fluid {
+    display: flex;
+    flex-wrap: nowrap;
+    gap: 1rem;
+    min-width: max-content; /* Força o container a ter largura mínima baseada no conteúdo */
+    padding: 0;
+}
+
+/* 6. Configuração das colunas do Kanban */
+.card-row {
+    flex: 0 0 300px; /* Não encolhe, não cresce, largura fixa de 300px */
+    min-width: 300px; /* Garante largura mínima */
+    max-width: 300px; /* Garante largura máxima */
+    height: auto;
+    max-height: 100%;
+    display: flex;
+    flex-direction: column;
+}
+
+/* 7. Body das colunas com scroll vertical interno */
+.card-row .card-body {
+    flex-grow: 1;
+    overflow-y: auto; /* Scroll vertical interno para cada coluna */
+    overflow-x: hidden;
+    min-height: 50px; /* Altura mínima para funcionar o scroll */
+    max-height: calc(100vh - 300px); /* Limita altura máxima */
+    padding: 0.5rem;
+}
+
+/* 8. Ajuste para quando há content-header */
+.app-content.kanban .content-header + .content {
+    height: calc(100% - 80px); /* Ajusta altura considerando o header */
+}
+
+/* 9. Estilização dos cards arrastáveis */
+.draggable {
+    margin-bottom: 0.5rem;
+    cursor: move;
+    transition: opacity 0.2s ease;
+}
+
+.draggable.dragging {
+    opacity: 0.5;
+}
+
+/* 10. Estilização das áreas de drop */
+.drop-area {
+    min-height: 100px;
+    border-radius: 4px;
+    transition: background-color 0.2s ease;
+}
+
+.drop-area:hover {
+    background-color: rgba(0, 0, 0, 0.02);
+}
+
+/* 11. Responsividade para telas menores */
+@media (max-width: 768px) {
+    .card-row {
+        flex: 0 0 250px;
+        min-width: 250px;
+        max-width: 250px;
+    }
+    
+    .app-content.kanban .content {
+        gap: 0.5rem;
+        padding: 0.5rem;
+    }
+    
+    .card-row .card-body {
+        max-height: calc(100vh - 250px);
+    }
+}
+
+@media (max-width: 576px) {
+    .card-row {
+        flex: 0 0 200px;
+        min-width: 200px;
+        max-width: 200px;
+    }
+    
+    .card-row .card-body {
+        max-height: calc(100vh - 200px);
+    }
+}
+
+/* 12. Estilização da barra de scroll horizontal */
+.app-content.kanban .content::-webkit-scrollbar {
+    height: 8px;
+}
+
+.app-content.kanban .content::-webkit-scrollbar-track {
+    background: #f1f1f1;
+    border-radius: 4px;
+}
+
+.app-content.kanban .content::-webkit-scrollbar-thumb {
+    background: #c1c1c1;
+    border-radius: 4px;
+}
+
+.app-content.kanban .content::-webkit-scrollbar-thumb:hover {
+    background: #a1a1a1;
+}
+
+/* 13. Garantir que botões e filtros não quebrem o layout */
+.app-content.kanban .container .d-flex {
+    flex-wrap: wrap;
+    margin-bottom: 1rem;
+}
+
+/* 14. Ajustes específicos para o AdminLTE */
+.app-content.kanban .card-header {
+    padding: 0.75rem 1rem;
+    border-bottom: 1px solid rgba(0,0,0,.125);
+}
+
+.app-content.kanban .card-title {
+    margin: 0;
+    font-size: 1.1rem;
+    font-weight: 200;
+}
+
+/* Adicionar ao final do kanban.css */
+.app-content.kanban .content {
+    /* Força o scroll sempre no topo */
+    overflow-x: scroll !important; /* Força a barra sempre visível */
+    overflow-y: hidden;
+    /* ... outras propriedades existentes ... */
+}
+
+/* Mover a scrollbar para o topo visualmente */
+.app-content.kanban .content::-webkit-scrollbar {
+    height: 15px;
+}
+
+.app-content.kanban {
+    /* Reduzir altura para compensar scrollbar */
+    height: calc(100vh - 140px);
+}
