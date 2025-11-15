@@ -44,6 +44,13 @@ abstract class BaseController extends Controller
     // protected $session;
 
     /**
+     * Array de variáveis necessárias para o layout.
+     *
+     * @var array<string, mixed>
+     */
+    protected $layoutData = [];
+
+    /**
      * @return void
      */
     public function initController(RequestInterface $request, ResponseInterface $response, LoggerInterface $logger)
@@ -51,8 +58,41 @@ abstract class BaseController extends Controller
         // Do Not Edit This Line
         parent::initController($request, $response, $logger);
 
-        // Preload any models, libraries, etc, here.
+        //Carregando os dados para o layout
+        $this->layoutData = $this->getLayoutData();
+    }
 
-        // E.g.: $this->session = service('session');
+    /**
+     * Obtém os dados necessários para o layout.
+     *
+     * @return array<string, mixed>
+     */    
+    protected function getLayoutData(): array
+    {
+        $data['mensagensNaoLidas'] =  [];
+        $data['qteMensagensNaoLidas'] = 0;
+        $data['qteTarefas'] = 0;
+        $data['qteDespesasNaoPagas'] = 0;
+
+        $data['notificacoes'] = $data['qteMensagensNaoLidas'] + $data['qteTarefas'] + $data['qteDespesasNaoPagas'];
+        
+        $data['logoEmpresa'] = base_url('public/dist/assets/img/default-150x150.png');
+        $data['nomeEmpresa'] = 'Minha Empresa';
+        
+        return $data;
+        
+        // Exemplo de dados para o layout
+        
+    }
+
+
+    /**
+     * Método para carregar a view com os dados do layout.
+     */
+    public function loadView(string $view, array $data = []): string
+    {
+        // Mescla os dados do layout com os dados específicos da view
+        $data = array_merge($this->layoutData, $data);
+        return view($view, $data);
     }
 }
