@@ -1,6 +1,6 @@
 <?= $this->extend('template/layout') ?>
 
-<?= $this->section('content') ?>
+<?= $this->section('conteudo') ?>
 <div class="card">
     <div class="card-header">
         <h5 class="card-title">Conselhos</h5>
@@ -16,6 +16,11 @@
                 </tr>
             </thead>
             <tbody>
+                <?php if (empty($conselhos)) : ?>
+                    <tr>
+                        <td colspan="3" class="text-center">Nenhum conselho encontrado.</td>
+                    </tr>
+                <?php else : ?>
                 <?php foreach ($conselhos as $conselho): ?>
                     <tr>
                         <td><?= $conselho['nome'] ?></td>
@@ -29,6 +34,7 @@
                         </td>
                     </tr>
                 <?php endforeach; ?>
+                <?php endif; ?>
             </tbody>
         </table>
     </div>

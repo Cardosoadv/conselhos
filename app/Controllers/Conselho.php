@@ -3,28 +3,27 @@
 namespace App\Controllers;
 
 use App\Models\ConselhoModel;
-use App\Models\ProfissaoModel;
 
 class Conselho extends BaseController
 {
     private $conselhoModel;
-    private $profissaoModel;
 
     public function __construct()
     {
         $this->conselhoModel = new ConselhoModel();
-        $this->profissaoModel = new ProfissaoModel();
     }
 
     public function index()
     {
         $dados = $this->conselhoModel->findAll();
-        return view('conselho/index', ['conselhos' => $dados]);
+        $dados['titulo'] = 'Conselhos';
+        return $this->loadView('conselho/index', $dados);
     }
 
     public function new()
     {
-        return view('conselho/form');
+        $dados['titulo'] = 'Novo Conselho';
+        return $this->loadView('conselho/form', $dados);
     }
 
     public function create()
@@ -36,9 +35,9 @@ class Conselho extends BaseController
 
     public function edit($id = null)
     {
-        $dado = $this->conselhoModel->find($id);
-        $dado['profissoes'] = $this->profissaoModel->where('conselho_id', $id)->findAll();
-        return view('conselho/form', ['conselho' => $dado]);
+        $dados = $this->conselhoModel->find($id);
+        $dados['titulo'] = 'Editar Conselho';
+        return $this->loadView('conselho/form', $dados);
     }
 
     public function update($id = null)
