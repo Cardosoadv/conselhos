@@ -45,4 +45,10 @@ $permission = $permitions->permission();
         </a>
     </li>
     <?php endif; ?>
+    <li class="nav-item">
+        <a href="<?= site_url('conselho'); ?>" class="nav-link <?= ($active === 'conselho') ? 'active bg-primary text-white shadow-sm' : ''; ?>">
+            <i class="nav-icon fas fa-scale-balanced"></i>
+            <p>Conselhos</p>
+        </a>
+    </li>
 </ul>
