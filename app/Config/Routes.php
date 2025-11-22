@@ -8,6 +8,8 @@ use CodeIgniter\Router\RouteCollection;
 $routes->get('/', 'Home::index');
 
 $routes->resource('conselho');
-$routes->resource('profissao');
+$routes->get('usuarios/imagem/(:num)/(:segment)', 'Usuarios::mostrarImagem/$1/$2');
+$routes->get('usuarios/avatar/(:num)', 'Usuarios::avatar/$1');
+$routes->resource('usuarios');
 
 service('auth')->routes($routes);

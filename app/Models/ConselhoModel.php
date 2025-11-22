@@ -4,6 +4,9 @@ namespace App\Models;
 
 use CodeIgniter\Model;
 
+/**
+ * Modelo responsável pela interação com a tabela de conselhos.
+ */
 class ConselhoModel extends Model
 {
     protected $table            = 'conselhos';
@@ -13,8 +16,17 @@ class ConselhoModel extends Model
     protected $useSoftDeletes   = true;
     protected $protectFields    = true;
     protected $allowedFields    = [
-        'nome', 'sigla', 'sistema_profissoes', 'site', 'email',
-        'logradouro', 'numero', 'bairro', 'cidade', 'estado', 'cep'
+        'nome',
+        'sigla',
+        'sistema_profissoes',
+        'site',
+        'email',
+        'logradouro',
+        'numero',
+        'bairro',
+        'cidade',
+        'estado',
+        'cep'
     ];
 
     protected bool $allowEmptyInserts = false;
