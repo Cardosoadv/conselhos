@@ -1,68 +1,101 @@
-# CodeIgniter 4 Application Starter
+# Sistema de Gerenciamento de Conselhos
 
-## What is CodeIgniter?
+Este é um sistema desenvolvido em PHP com CodeIgniter 4 para o gerenciamento de Conselhos e Dados de Usuários. O projeto foi estruturado para ser escalável, seguro e de fácil manutenção.
 
-CodeIgniter is a PHP full-stack web framework that is light, fast, flexible and secure.
-More information can be found at the [official site](https://codeigniter.com).
+## Requisitos
 
-This repository holds a composer-installable app starter.
-It has been built from the
-[development repository](https://github.com/codeigniter4/CodeIgniter4).
+- PHP 7.4 ou superior
+- Extensão PHP `intl` ativada
+- Extensão PHP `mbstring` ativada
+- MySQL ou MariaDB
+- Composer
 
-More information about the plans for version 4 can be found in [CodeIgniter 4](https://forum.codeigniter.com/forumdisplay.php?fid=28) on the forums.
+## Instalação
 
-You can read the [user guide](https://codeigniter.com/user_guide/)
-corresponding to the latest version of the framework.
+1.  **Clone o repositório** (ou extraia os arquivos):
 
-## Installation & updates
+    ```bash
+    git clone <url-do-repositorio>
+    cd conselhos
+    ```
 
-`composer create-project codeigniter4/appstarter` then `composer update` whenever
-there is a new release of the framework.
+2.  **Instale as dependências**:
 
-When updating, check the release notes to see if there are any changes you might need to apply
-to your `app` folder. The affected files can be copied or merged from
-`vendor/codeigniter4/framework/app`.
+    ```bash
+    composer install
+    ```
 
-## Setup
+3.  **Configure o Banco de Dados**:
 
-Copy `env` to `.env` and tailor for your app, specifically the baseURL
-and any database settings.
+    - Copie o arquivo `env` para `.env`:
 
-## Important Change with index.php
+      ```bash
+      cp env .env
+      ```
 
-`index.php` is no longer in the root of the project! It has been moved inside the *public* folder,
-for better security and separation of components.
+      _(No Windows: `copy env .env`)_
 
-This means that you should configure your web server to "point" to your project's *public* folder, and
-not to the project root. A better practice would be to configure a virtual host to point there. A poor practice would be to point your web server to the project root and expect to enter *public/...*, as the rest of your logic and the
-framework are exposed.
+    - Edite o arquivo `.env` e configure as credenciais do banco de dados:
+      ```ini
+      database.default.hostname = localhost
+      database.default.database = nome_do_banco
+      database.default.username = seu_usuario
+      database.default.password = sua_senha
+      database.default.DBDriver = MySQLi
+      ```
+    - Defina o ambiente para desenvolvimento (opcional, para ver erros):
+      ```ini
+      CI_ENVIRONMENT = development
+      ```
 
-**Please** read the user guide for a better explanation of how CI4 works!
+4.  **Execute as Migrations**:
 
-## Repository Management
+    ```bash
+    php spark migrate
+    ```
 
-We use GitHub issues, in our main repository, to track **BUGS** and to track approved **DEVELOPMENT** work packages.
-We use our [forum](http://forum.codeigniter.com) to provide SUPPORT and to discuss
-FEATURE REQUESTS.
+5.  **Inicie o Servidor de Desenvolvimento**:
+    ```bash
+    php spark serve
+    ```
+    O sistema estará acessível em `http://localhost:8080`.
 
-This repository is a "distribution" one, built by our release preparation script.
-Problems with it can be raised on our forum, or as issues in the main repository.
+## Funcionalidades
 
-## Server Requirements
+### Conselhos
 
-PHP version 8.1 or higher is required, with the following extensions installed:
+- **Listagem**: Visualização de todos os conselhos cadastrados.
+- **Cadastro**: Adição de novos conselhos com informações detalhadas (endereço, contato, etc.).
+- **Edição**: Atualização dos dados dos conselhos.
+- **Profissões**: Gerenciamento de profissões associadas a cada conselho.
 
-- [intl](http://php.net/manual/en/intl.requirements.php)
-- [mbstring](http://php.net/manual/en/mbstring.installation.php)
+### Dados de Usuários
 
-> [!WARNING]
-> - The end of life date for PHP 7.4 was November 28, 2022.
-> - The end of life date for PHP 8.0 was November 26, 2023.
-> - If you are still using PHP 7.4 or 8.0, you should upgrade immediately.
-> - The end of life date for PHP 8.1 will be December 31, 2025.
+- **Integração com Shield**: Vinculação com a tabela de usuários do CodeIgniter Shield.
+- **Cadastro Completo**: Nome, CPF, Data de Nascimento, Telefone e Endereço.
+- **Upload de Imagem**: Foto de perfil com validação.
+- **CRUD Completo**: Listagem, criação, edição e exclusão de dados de usuários.
 
-Additionally, make sure that the following extensions are enabled in your PHP:
+## Estrutura do Projeto e Documentação
 
-- json (enabled by default - don't turn it off)
-- [mysqlnd](http://php.net/manual/en/mysqlnd.install.php) if you plan to use MySQL
-- [libcurl](http://php.net/manual/en/curl.requirements.php) if you plan to use the HTTP\CURLRequest library
+O código fonte foi totalmente documentado seguindo os padrões PHPDoc. Cada classe, método e função possui docstrings explicativos em português.
+
+- `app/Controllers`: Controladores da aplicação.
+  - `Conselho.php`: Gerencia as ações relacionadas aos conselhos.
+  - `Usuarios.php`: Gerencia os dados complementares dos usuários.
+- `app/Models`: Modelos de dados.
+  - `ConselhoModel.php`: Interação com a tabela `conselhos`.
+  - `UsersDadosModel.php`: Interação com a tabela `users_dados`.
+- `app/Views`: Arquivos de visualização (HTML/PHP).
+  - `conselho/`: Views para o módulo de conselhos.
+  - `users_dados/`: Views para o módulo de dados de usuários.
+  - `template/`: Layout principal e cabeçalho.
+- `app/Database/Migrations`: Arquivos de migração do banco de dados.
+- `public/uploads`: Diretório para armazenamento de imagens de usuários.
+
+## Tecnologias Utilizadas
+
+- **CodeIgniter 4**: Framework PHP robusto e leve.
+- **Bootstrap 5**: Framework CSS para o frontend responsivo.
+- **FontAwesome**: Ícones vetoriais e logotipos sociais.
+- **AdminLTE**: Tema do painel administrativo (se aplicável).

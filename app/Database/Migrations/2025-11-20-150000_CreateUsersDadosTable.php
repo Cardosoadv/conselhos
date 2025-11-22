@@ -5,12 +5,12 @@ namespace App\Database\Migrations;
 use CodeIgniter\Database\Migration;
 
 /**
- * Migration para criação da tabela de conselhos.
+ * Migration para criação da tabela de dados complementares dos usuários.
  */
-class CreateConselhosTable extends Migration
+class CreateUsersDadosTable extends Migration
 {
     /**
-     * Cria a tabela 'conselhos'.
+     * Cria a tabela 'users_dados'.
      *
      * @return void
      */
@@ -19,71 +19,67 @@ class CreateConselhosTable extends Migration
         $this->forge->addField([
             'id' => [
                 'type'           => 'INT',
-                'constraint'     => 5,
+                'constraint'     => 11,
                 'unsigned'       => true,
                 'auto_increment' => true,
+            ],
+            'user_id' => [
+                'type'       => 'INT',
+                'constraint' => 11,
+                'unsigned'   => true,
             ],
             'nome' => [
                 'type'       => 'VARCHAR',
                 'constraint' => '100',
             ],
-            'sigla' => [
+            'cpf' => [
                 'type'       => 'VARCHAR',
-                'constraint' => '10',
-            ],
-            'sistema_profissoes' => [
-                'type'       => 'VARCHAR',
-                'constraint' => '100',
+                'constraint' => '14',
                 'null'       => true,
-                'after'      => 'sigla',
             ],
-            'site' => [
-                'type'       => 'VARCHAR',
-                'constraint' => '100',
-                'null'       => true,
-                'after'      => 'sistema_profissoes',
+            'data_nascimento' => [
+                'type' => 'DATE',
+                'null' => true,
             ],
-            'email' => [
+            'telefone' => [
                 'type'       => 'VARCHAR',
-                'constraint' => '100',
+                'constraint' => '20',
                 'null'       => true,
-                'after'      => 'site',
+            ],
+            'cep' => [
+                'type'       => 'VARCHAR',
+                'constraint' => '9',
+                'null'       => true,
             ],
             'logradouro' => [
                 'type'       => 'VARCHAR',
                 'constraint' => '100',
                 'null'       => true,
-                'after'      => 'email',
             ],
             'numero' => [
                 'type'       => 'VARCHAR',
-                'constraint' => '10',
+                'constraint' => '20',
                 'null'       => true,
-                'after'      => 'logradouro',
             ],
             'bairro' => [
                 'type'       => 'VARCHAR',
-                'constraint' => '50',
+                'constraint' => '100',
                 'null'       => true,
-                'after'      => 'numero',
             ],
             'cidade' => [
                 'type'       => 'VARCHAR',
-                'constraint' => '50',
+                'constraint' => '100',
                 'null'       => true,
-                'after'      => 'bairro',
             ],
             'estado' => [
                 'type'       => 'VARCHAR',
                 'constraint' => '2',
                 'null'       => true,
-                'after'      => 'cidade',
             ],
-            'cep' => [
+            'imagem' => [
                 'type'       => 'VARCHAR',
-                'constraint' => '8',
+                'constraint' => '255',
                 'null'       => true,
-                'after'      => 'estado',
             ],
             'created_at' => [
                 'type' => 'DATETIME',
@@ -98,17 +94,19 @@ class CreateConselhosTable extends Migration
                 'null' => true,
             ],
         ]);
+
         $this->forge->addKey('id', true);
-        $this->forge->createTable('conselhos');
+        $this->forge->addForeignKey('user_id', 'users', 'id', 'CASCADE', 'CASCADE');
+        $this->forge->createTable('users_dados');
     }
 
     /**
-     * Remove a tabela 'conselhos'.
+     * Remove a tabela 'users_dados'.
      *
      * @return void
      */
     public function down()
     {
-        $this->forge->dropTable('conselhos');
+        $this->forge->dropTable('users_dados');
     }
 }

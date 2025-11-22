@@ -12,34 +12,34 @@ use Psr\Log\LoggerInterface;
 /**
  * Class BaseController
  *
- * BaseController provides a convenient place for loading components
- * and performing functions that are needed by all your controllers.
- * Extend this class in any new controllers:
+ * BaseController fornece um local conveniente para carregar componentes
+ * e executar funções que são necessárias por todos os seus controladores.
+ * Estenda esta classe em qualquer novo controlador:
  *     class Home extends BaseController
  *
- * For security be sure to declare any new methods as protected or private.
+ * Para segurança, certifique-se de declarar quaisquer novos métodos como protected ou private.
  */
 abstract class BaseController extends Controller
 {
     /**
-     * Instance of the main Request object.
+     * Instância do objeto Request principal.
      *
      * @var CLIRequest|IncomingRequest
      */
     protected $request;
 
     /**
-     * An array of helpers to be loaded automatically upon
-     * class instantiation. These helpers will be available
-     * to all other controllers that extend BaseController.
+     * Um array de helpers a serem carregados automaticamente na
+     * instanciação da classe. Esses helpers estarão disponíveis
+     * para todos os outros controladores que estendem BaseController.
      *
      * @var list<string>
      */
     protected $helpers = [];
 
     /**
-     * Be sure to declare properties for any property fetch you initialized.
-     * The creation of dynamic property is deprecated in PHP 8.2.
+     * Certifique-se de declarar propriedades para qualquer busca de propriedade que você inicializou.
+     * A criação de propriedade dinâmica é obsoleta no PHP 8.2.
      */
     // protected $session;
 
@@ -51,6 +51,11 @@ abstract class BaseController extends Controller
     protected $layoutData = [];
 
     /**
+     * Inicializa o controlador.
+     *
+     * @param RequestInterface $request Instância da requisição.
+     * @param ResponseInterface $response Instância da resposta.
+     * @param LoggerInterface $logger Instância do logger.
      * @return void
      */
     public function initController(RequestInterface $request, ResponseInterface $response, LoggerInterface $logger)
@@ -66,7 +71,7 @@ abstract class BaseController extends Controller
      * Obtém os dados necessários para o layout.
      *
      * @return array<string, mixed>
-     */    
+     */
     protected function getLayoutData(): array
     {
         $data['mensagensNaoLidas'] =  [];
@@ -75,19 +80,23 @@ abstract class BaseController extends Controller
         $data['qteDespesasNaoPagas'] = 0;
 
         $data['notificacoes'] = $data['qteMensagensNaoLidas'] + $data['qteTarefas'] + $data['qteDespesasNaoPagas'];
-        
+
         $data['logoEmpresa'] = base_url('public/dist/assets/img/default-150x150.png');
         $data['nomeEmpresa'] = 'Minha Empresa';
-        
+
         return $data;
-        
+
         // Exemplo de dados para o layout
-        
+
     }
 
 
     /**
      * Método para carregar a view com os dados do layout.
+     *
+     * @param string $view Nome da view a ser carregada.
+     * @param array $data Dados a serem passados para a view.
+     * @return string O conteúdo da view renderizada.
      */
     public function loadView(string $view, array $data = []): string
     {
