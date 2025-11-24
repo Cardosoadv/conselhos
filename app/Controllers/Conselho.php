@@ -27,7 +27,7 @@ class Conselho extends BaseController
      */
     public function index()
     {
-        $dados = $this->conselhoModel->findAll();
+        $dados['conselhos'] = $this->conselhoModel->findAll();
         $dados['titulo'] = 'Conselhos';
         return $this->loadView('conselho/index', $dados);
     }

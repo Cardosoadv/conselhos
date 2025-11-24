@@ -26,10 +26,10 @@
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.min.js" integrity="sha256-YMa+wAM6QkVyz999odX7lPRxkoYAan8suedu4k2Zur8=" crossorigin="anonymous"></script>
 
 <!--begin::AdminLTE com Versioning-->
-<script src="<?= base_url('public/dist/js/adminlte.min.js?v=' . filemtime(FCPATH . 'public/dist/js/adminlte.min.js')) ?>"></script>
+<script src="<?= base_url('dist/js/adminlte.min.js?v=' . filemtime(FCPATH . 'dist/js/adminlte.min.js')) ?>"></script>
 
 <!--begin::Main com Versioning-->
-<script src="<?= base_url('public/dist/js/main.min.js?v=' . filemtime(FCPATH . 'public/dist/js/main.min.js')) ?>"></script>
+<script src="<?= base_url('dist/js/main.min.js?v=' . filemtime(FCPATH . 'dist/js/main.min.js')) ?>"></script>
 
 
 <!--begin::Chart Libraries-->
