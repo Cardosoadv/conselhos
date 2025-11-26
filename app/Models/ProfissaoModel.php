@@ -4,6 +4,9 @@ namespace App\Models;
 
 use CodeIgniter\Model;
 
+/**
+ * Modelo responsável pela interação com a tabela de profissões.
+ */
 class ProfissaoModel extends Model
 {
     protected $table            = 'profissoes';

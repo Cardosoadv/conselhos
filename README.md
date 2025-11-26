@@ -1,101 +1,114 @@
 # Sistema de Gerenciamento de Conselhos
 
-Este é um sistema desenvolvido em PHP com CodeIgniter 4 para o gerenciamento de Conselhos e Dados de Usuários. O projeto foi estruturado para ser escalável, seguro e de fácil manutenção.
+Este repositório contém o código-fonte do Sistema de Gerenciamento de Conselhos, uma aplicação web desenvolvida em PHP utilizando o framework CodeIgniter 4.
 
-## Requisitos
+## Visão Geral
 
-- PHP 7.4 ou superior
-- Extensão PHP `intl` ativada
-- Extensão PHP `mbstring` ativada
+O sistema tem como objetivo gerenciar conselhos profissionais, profissionais associados, profissões e dados de usuários. Ele oferece funcionalidades de CRUD (Create, Read, Update, Delete), controle de acesso baseado em permissões e validação de dados, incluindo CPF.
+
+## Funcionalidades Principais
+
+- **Gerenciamento de Conselhos:** Cadastro, edição e listagem de conselhos.
+- **Gerenciamento de Profissionais:** Cadastro completo de profissionais, incluindo upload de foto e associação com múltiplas profissões.
+- **Gerenciamento de Profissões:** Cadastro e manutenção de profissões.
+- **Controle de Permissões:** Sistema granular de permissões por usuário e grupo (via CodeIgniter Shield).
+- **Dados de Usuários:** Gerenciamento de dados complementares de usuários (CPF, endereço, foto, etc.).
+- **Validação de CPF:** Validação customizada de CPF integrada ao sistema.
+
+## Requisitos do Sistema
+
+- PHP 7.4 ou superior (recomendado 8.1+)
+- Extensão PHP `intl`
+- Extensão PHP `mbstring`
+- Extensão PHP `gd` (para manipulação de imagens)
 - MySQL ou MariaDB
 - Composer
 
 ## Instalação
 
-1.  **Clone o repositório** (ou extraia os arquivos):
+1.  **Clone o repositório:**
 
     ```bash
-    git clone <url-do-repositorio>
+    git clone https://github.com/seu-usuario/conselhos.git
     cd conselhos
     ```
 
-2.  **Instale as dependências**:
+2.  **Instale as dependências:**
 
     ```bash
     composer install
     ```
 
-3.  **Configure o Banco de Dados**:
+3.  **Configure o ambiente:**
 
-    - Copie o arquivo `env` para `.env`:
+    Copie o arquivo `env` para `.env` e configure as variáveis de banco de dados e URL base:
 
-      ```bash
-      cp env .env
-      ```
+    ```ini
+    cp env .env
+    ```
 
-      _(No Windows: `copy env .env`)_
+    Edite o arquivo `.env`:
 
-    - Edite o arquivo `.env` e configure as credenciais do banco de dados:
-      ```ini
-      database.default.hostname = localhost
-      database.default.database = nome_do_banco
-      database.default.username = seu_usuario
-      database.default.password = sua_senha
-      database.default.DBDriver = MySQLi
-      ```
-    - Defina o ambiente para desenvolvimento (opcional, para ver erros):
-      ```ini
-      CI_ENVIRONMENT = development
-      ```
+    ```ini
+    CI_ENVIRONMENT = development
+    app.baseURL = 'http://localhost/conselhos'
 
-4.  **Execute as Migrations**:
+    database.default.hostname = localhost
+    database.default.database = nome_do_banco
+    database.default.username = usuario
+    database.default.password = senha
+    database.default.DBDriver = MySQLi
+    ```
+
+4.  **Execute as migrações:**
 
     ```bash
     php spark migrate
     ```
 
-5.  **Inicie o Servidor de Desenvolvimento**:
+5.  **Inicie o servidor de desenvolvimento:**
+
     ```bash
     php spark serve
     ```
-    O sistema estará acessível em `http://localhost:8080`.
 
-## Funcionalidades
+    Acesse `http://localhost:8080` no seu navegador.
 
-### Conselhos
+## Estrutura do Projeto
 
-- **Listagem**: Visualização de todos os conselhos cadastrados.
-- **Cadastro**: Adição de novos conselhos com informações detalhadas (endereço, contato, etc.).
-- **Edição**: Atualização dos dados dos conselhos.
-- **Profissões**: Gerenciamento de profissões associadas a cada conselho.
-
-### Dados de Usuários
-
-- **Integração com Shield**: Vinculação com a tabela de usuários do CodeIgniter Shield.
-- **Cadastro Completo**: Nome, CPF, Data de Nascimento, Telefone e Endereço.
-- **Upload de Imagem**: Foto de perfil com validação.
-- **CRUD Completo**: Listagem, criação, edição e exclusão de dados de usuários.
-
-## Estrutura do Projeto e Documentação
-
-O código fonte foi totalmente documentado seguindo os padrões PHPDoc. Cada classe, método e função possui docstrings explicativos em português.
-
-- `app/Controllers`: Controladores da aplicação.
-  - `Conselho.php`: Gerencia as ações relacionadas aos conselhos.
-  - `Usuarios.php`: Gerencia os dados complementares dos usuários.
-- `app/Models`: Modelos de dados.
-  - `ConselhoModel.php`: Interação com a tabela `conselhos`.
-  - `UsersDadosModel.php`: Interação com a tabela `users_dados`.
+- `app/Controllers`: Controladores da aplicação (lógica de fluxo).
+- `app/Models`: Modelos de dados (interação com o banco de dados).
 - `app/Views`: Arquivos de visualização (HTML/PHP).
-  - `conselho/`: Views para o módulo de conselhos.
-  - `users_dados/`: Views para o módulo de dados de usuários.
-  - `template/`: Layout principal e cabeçalho.
-- `app/Database/Migrations`: Arquivos de migração do banco de dados.
-- `public/uploads`: Diretório para armazenamento de imagens de usuários.
+- `app/Traits`: Traits reutilizáveis (ex: `ValidarCpfTrait`).
+- `app/Validation`: Regras de validação customizadas.
+- `app/Config`: Arquivos de configuração (Rotas, Banco de Dados, etc.).
 
-## Tecnologias Utilizadas
+## Uso
 
-- **CodeIgniter 4**: Framework PHP robusto e leve.
-- **Bootstrap 5**: Framework CSS para o frontend responsivo.
-- **FontAwesome**: Ícones vetoriais e logotipos sociais.
-- **AdminLTE**: Tema do painel administrativo (se aplicável).
+### Usuários e Permissões
+
+O sistema utiliza o CodeIgniter Shield para autenticação. Usuários podem ser gerenciados via banco de dados ou interface administrativa (se implementada). As permissões são definidas em `app/Config/AuthGroups.php` e podem ser atribuídas a grupos ou diretamente a usuários.
+
+### Validação de CPF
+
+A validação de CPF é feita através da regra `valid_cpf`, disponível globalmente. Ela utiliza a trait `App\Traits\ValidarCpfTrait`.
+
+Exemplo de uso em um Model:
+
+```php
+protected $validationRules = [
+    'cpf' => 'required|valid_cpf'
+];
+```
+
+## Contribuição
+
+1.  Faça um Fork do projeto.
+2.  Crie uma Branch para sua Feature (`git checkout -b feature/MinhaFeature`).
+3.  Faça o Commit de suas mudanças (`git commit -m 'Adiciona MinhaFeature'`).
+4.  Faça o Push para a Branch (`git push origin feature/MinhaFeature`).
+5.  Abra um Pull Request.
+
+## Licença
+
+Este projeto está licenciado sob a licença MIT - veja o arquivo [LICENSE](LICENSE) para detalhes.

@@ -5,17 +5,40 @@ namespace App\Controllers;
 use App\Models\ProfissionalModel;
 use App\Models\ProfissaoModel;
 
+/**
+ * Controlador responsável pelo gerenciamento de Profissionais.
+ */
 class Profissionais extends BaseController
 {
+    /**
+     * Instância do modelo de Profissional.
+     *
+     * @var ProfissionalModel
+     */
     protected $profissionalModel;
+
+    /**
+     * Instância do modelo de Profissão.
+     *
+     * @var ProfissaoModel
+     */
     protected $profissaoModel;
 
+    /**
+     * Construtor da classe.
+     * Inicializa os modelos de Profissional e Profissão.
+     */
     public function __construct()
     {
         $this->profissionalModel = new ProfissionalModel();
         $this->profissaoModel    = new ProfissaoModel();
     }
 
+    /**
+     * Exibe a lista de todos os profissionais cadastrados.
+     *
+     * @return string|\CodeIgniter\HTTP\RedirectResponse O conteúdo da view renderizada ou redirecionamento em caso de erro.
+     */
     public function index()
     {
         if (! auth()->user()->can('profissionais.listar')) {
@@ -30,6 +53,11 @@ class Profissionais extends BaseController
         return $this->loadView('profissionais/index', $data);
     }
 
+    /**
+     * Exibe o formulário para criar um novo profissional.
+     *
+     * @return string|\CodeIgniter\HTTP\RedirectResponse O conteúdo da view renderizada ou redirecionamento em caso de erro.
+     */
     public function new()
     {
         if (! auth()->user()->can('profissionais.criar')) {
@@ -44,6 +72,11 @@ class Profissionais extends BaseController
         return $this->loadView('profissionais/form', $data);
     }
 
+    /**
+     * Processa a criação de um novo profissional.
+     *
+     * @return \CodeIgniter\HTTP\RedirectResponse Redireciona para a lista de profissionais ou volta com erros.
+     */
     public function create()
     {
         if (! auth()->user()->can('profissionais.criar')) {
@@ -93,6 +126,12 @@ class Profissionais extends BaseController
         }
     }
 
+    /**
+     * Exibe o formulário para editar um profissional existente.
+     *
+     * @param int|string $id O ID do profissional.
+     * @return string|\CodeIgniter\HTTP\RedirectResponse O conteúdo da view renderizada ou redirecionamento em caso de erro.
+     */
     public function edit($id)
     {
         if (! auth()->user()->can('profissionais.editar')) {
@@ -119,6 +158,12 @@ class Profissionais extends BaseController
         return $this->loadView('profissionais/form', $data);
     }
 
+    /**
+     * Processa a atualização de um profissional existente.
+     *
+     * @param int|string $id O ID do profissional.
+     * @return \CodeIgniter\HTTP\RedirectResponse Redireciona para a lista de profissionais ou volta com erros.
+     */
     public function update($id)
     {
         if (! auth()->user()->can('profissionais.editar')) {
@@ -166,6 +211,12 @@ class Profissionais extends BaseController
         return redirect()->to('/profissionais')->with('message', 'Profissional atualizado com sucesso.');
     }
 
+    /**
+     * Exclui um profissional existente.
+     *
+     * @param int|string $id O ID do profissional.
+     * @return \CodeIgniter\HTTP\RedirectResponse Redireciona para a lista de profissionais.
+     */
     public function delete($id)
     {
         if (! auth()->user()->can('profissionais.excluir')) {
@@ -182,8 +233,12 @@ class Profissionais extends BaseController
         return redirect()->to('/profissionais')->with('message', 'Profissional excluído com sucesso.');
     }
 
-    // Método para servir a imagem (já que está em writable)
-    // Rota: profissionais/foto/(:num)
+    /**
+     * Exibe a foto do profissional.
+     *
+     * @param int|string $id O ID do profissional.
+     * @return \CodeIgniter\HTTP\ResponseInterface A imagem ou erro 404.
+     */
     public function foto($id)
     {
         $profissional = $this->profissionalModel->find($id);

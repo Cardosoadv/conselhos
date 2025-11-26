@@ -11,7 +11,18 @@ use CodeIgniter\Shield\Models\UserModel;
  */
 class Usuarios extends BaseController
 {
+    /**
+     * Instância do modelo de Dados de Usuários.
+     *
+     * @var UsersDadosModel
+     */
     private $usersDadosModel;
+
+    /**
+     * Instância do modelo de Usuários (Shield).
+     *
+     * @var UserModel
+     */
     private $usersModel;
 
     /**

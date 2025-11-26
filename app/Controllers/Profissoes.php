@@ -4,15 +4,32 @@ namespace App\Controllers;
 
 use App\Models\ProfissaoModel;
 
+/**
+ * Controlador responsável pelo gerenciamento de Profissões.
+ */
 class Profissoes extends BaseController
 {
+    /**
+     * Instância do modelo de Profissão.
+     *
+     * @var ProfissaoModel
+     */
     protected $profissaoModel;
 
+    /**
+     * Construtor da classe.
+     * Inicializa o modelo de Profissão.
+     */
     public function __construct()
     {
         $this->profissaoModel = new ProfissaoModel();
     }
 
+    /**
+     * Exibe a lista de todas as profissões cadastradas.
+     *
+     * @return string|\CodeIgniter\HTTP\RedirectResponse O conteúdo da view renderizada ou redirecionamento em caso de erro.
+     */
     public function index()
     {
         if (! auth()->user()->can('profissoes.listar')) {
@@ -27,6 +44,11 @@ class Profissoes extends BaseController
         return $this->loadView('profissoes/index', $data);
     }
 
+    /**
+     * Exibe o formulário para criar uma nova profissão.
+     *
+     * @return string|\CodeIgniter\HTTP\RedirectResponse O conteúdo da view renderizada ou redirecionamento em caso de erro.
+     */
     public function new()
     {
         if (! auth()->user()->can('profissoes.criar')) {
@@ -40,6 +62,11 @@ class Profissoes extends BaseController
         return $this->loadView('profissoes/form', $data);
     }
 
+    /**
+     * Processa a criação de uma nova profissão.
+     *
+     * @return \CodeIgniter\HTTP\RedirectResponse Redireciona para a lista de profissões ou volta com erros.
+     */
     public function create()
     {
         if (! auth()->user()->can('profissoes.criar')) {
@@ -55,6 +82,12 @@ class Profissoes extends BaseController
         }
     }
 
+    /**
+     * Exibe o formulário para editar uma profissão existente.
+     *
+     * @param int|string $id O ID da profissão.
+     * @return string|\CodeIgniter\HTTP\RedirectResponse O conteúdo da view renderizada ou redirecionamento em caso de erro.
+     */
     public function edit($id)
     {
         if (! auth()->user()->can('profissoes.editar')) {
@@ -75,6 +108,12 @@ class Profissoes extends BaseController
         return $this->loadView('profissoes/form', $data);
     }
 
+    /**
+     * Processa a atualização de uma profissão existente.
+     *
+     * @param int|string $id O ID da profissão.
+     * @return \CodeIgniter\HTTP\RedirectResponse Redireciona para a lista de profissões ou volta com erros.
+     */
     public function update($id)
     {
         if (! auth()->user()->can('profissoes.editar')) {
@@ -90,6 +129,12 @@ class Profissoes extends BaseController
         }
     }
 
+    /**
+     * Exclui uma profissão existente.
+     *
+     * @param int|string $id O ID da profissão.
+     * @return \CodeIgniter\HTTP\RedirectResponse Redireciona para a lista de profissões.
+     */
     public function delete($id)
     {
         if (! auth()->user()->can('profissoes.excluir')) {

@@ -38,12 +38,6 @@ abstract class BaseController extends Controller
     protected $helpers = [];
 
     /**
-     * Certifique-se de declarar propriedades para qualquer busca de propriedade que você inicializou.
-     * A criação de propriedade dinâmica é obsoleta no PHP 8.2.
-     */
-    // protected $session;
-
-    /**
      * Array de variáveis necessárias para o layout.
      *
      * @var array<string, mixed>
@@ -63,7 +57,7 @@ abstract class BaseController extends Controller
         // Do Not Edit This Line
         parent::initController($request, $response, $logger);
 
-        //Carregando os dados para o layout
+        // Carregando os dados para o layout
         $this->layoutData = $this->getLayoutData();
     }
 
@@ -85,11 +79,7 @@ abstract class BaseController extends Controller
         $data['nomeEmpresa'] = 'Minha Empresa';
 
         return $data;
-
-        // Exemplo de dados para o layout
-
     }
-
 
     /**
      * Método para carregar a view com os dados do layout.

@@ -5,6 +5,9 @@ namespace App\Models;
 use CodeIgniter\Model;
 use App\Traits\ValidarCpfTrait;
 
+/**
+ * Modelo responsável pela interação com a tabela de profissionais.
+ */
 class ProfissionalModel extends Model
 {
     use ValidarCpfTrait;
@@ -44,6 +47,9 @@ class ProfissionalModel extends Model
 
     /**
      * Retorna as profissões associadas a este profissional.
+     *
+     * @param int|string $profissionalId O ID do profissional.
+     * @return array Lista de profissões associadas.
      */
     public function getProfissoes($profissionalId)
     {
@@ -57,6 +63,11 @@ class ProfissionalModel extends Model
 
     /**
      * Sincroniza as profissões de um profissional.
+     * Remove as associações antigas e cria novas.
+     *
+     * @param int|string $profissionalId O ID do profissional.
+     * @param array $profissoesIds Array com os IDs das profissões a serem associadas.
+     * @return void
      */
     public function syncProfissoes($profissionalId, array $profissoesIds)
     {

@@ -7,8 +7,16 @@ use App\Models\ConselhoModel;
 /**
  * Controlador responsável pelo gerenciamento de Conselhos.
  */
+/**
+ * Controlador responsável pelo gerenciamento de Conselhos.
+ */
 class Conselho extends BaseController
 {
+    /**
+     * Instância do modelo de Conselho.
+     *
+     * @var ConselhoModel
+     */
     private $conselhoModel;
 
     /**

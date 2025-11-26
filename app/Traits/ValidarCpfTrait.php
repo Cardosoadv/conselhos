@@ -2,10 +2,18 @@
 
 namespace App\Traits;
 
+/**
+ * Trait ValidarCpfTrait
+ *
+ * Fornece funcionalidades para validação de CPF.
+ */
 trait ValidarCpfTrait
 {
     /**
      * Valida um número de CPF.
+     *
+     * Verifica se o CPF possui 11 dígitos, se não é uma sequência repetida
+     * e valida os dígitos verificadores.
      *
      * @param string|null $cpf O CPF a ser validado.
      * @return bool True se o CPF for válido, false caso contrário.
