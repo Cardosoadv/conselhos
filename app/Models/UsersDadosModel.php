@@ -3,12 +3,15 @@
 namespace App\Models;
 
 use CodeIgniter\Model;
+use App\Traits\ValidarCpfTrait;
 
 /**
  * Modelo responsável pela interação com a tabela de dados complementares dos usuários.
  */
 class UsersDadosModel extends Model
 {
+    use ValidarCpfTrait;
+
     protected $table            = 'users_dados';
     protected $primaryKey       = 'id';
     protected $useAutoIncrement = true;
@@ -41,7 +44,7 @@ class UsersDadosModel extends Model
     protected $validationRules      = [
         'user_id'         => 'required|integer',
         'nome'            => 'required|min_length[3]|max_length[100]',
-        'cpf'             => 'permit_empty|min_length[11]|max_length[14]',
+        'cpf'             => 'permit_empty|min_length[11]|max_length[14]|valid_cpf',
         'data_nascimento' => 'permit_empty|valid_date',
         'imagem'          => 'permit_empty|max_length[255]',
     ];

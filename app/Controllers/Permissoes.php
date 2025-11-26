@@ -5,7 +5,7 @@ namespace App\Controllers;
 use CodeIgniter\Controller;
 use CodeIgniter\Shield\Models\UserModel;
 
-class Permissoes extends Controller
+class Permissoes extends BaseController
 {
     public function index()
     {
@@ -14,10 +14,11 @@ class Permissoes extends Controller
             return redirect()->to('/')->with('error', 'Você não tem permissão para acessar esta página.');
         }
 
-        $userModel = new UserModel();
-        $users = $userModel->findAll();
+        $userModel      = new UserModel();
+        $data['users']  = $userModel->findAll();
+        $data['titulo'] = 'Permissões';
 
-        return view('permissoes/index', ['users' => $users]);
+        return $this->loadView('permissoes/index', $data);
     }
 
     public function gerenciar($userId)
@@ -27,8 +28,8 @@ class Permissoes extends Controller
             return redirect()->to('/')->with('error', 'Você não tem permissão para acessar esta página.');
         }
 
-        $userModel = new UserModel();
-        $user = $userModel->findById($userId);
+        $userModel      = new UserModel();
+        $user           = $userModel->findById($userId);
 
         if (! $user) {
             return redirect()->back()->with('error', 'Usuário não encontrado.');
@@ -50,10 +51,13 @@ class Permissoes extends Controller
             ];
         }
 
-        return view('permissoes/gerenciar', [
-            'user' => $user,
-            'groupedPermissions' => $groupedPermissions
-        ]);
+        $data = [
+            'user'                      => $user,
+            'groupedPermissions'        => $groupedPermissions,
+            'titulo'                    => 'Gerenciar Permissões - ' . $user->username
+        ];
+
+        return $this->loadView('permissoes/gerenciar', $data);
     }
 
     public function salvar($userId)
@@ -62,8 +66,8 @@ class Permissoes extends Controller
             return redirect()->to('/')->with('error', 'Acesso negado.');
         }
 
-        $userModel = new UserModel();
-        $user = $userModel->findById($userId);
+        $userModel      = new UserModel();
+        $user           = $userModel->findById($userId);
 
         if (! $user) {
             return redirect()->back()->with('error', 'Usuário não encontrado.');
@@ -102,7 +106,7 @@ class Permissoes extends Controller
 
         // Usando syncPermissions
         try {
-             $user->syncPermissions(...$permissions);
+            $user->syncPermissions(...$permissions);
         } catch (\Exception $e) {
             return redirect()->back()->with('error', 'Erro ao salvar permissões: ' . $e->getMessage());
         }
