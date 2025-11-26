@@ -43,23 +43,23 @@ class AuthGroups extends ShieldAuthGroups
     public array $groups = [
         'superadmin' => [
             'title'       => 'Super Admin',
-            'description' => 'Complete control of the site.',
+            'description' => 'Controle total do site.',
         ],
         'admin' => [
             'title'       => 'Admin',
-            'description' => 'Day to day administrators of the site.',
+            'description' => 'Administradores do dia a dia.',
         ],
         'developer' => [
             'title'       => 'Developer',
-            'description' => 'Site programmers.',
+            'description' => 'Programadores do site.',
         ],
         'user' => [
-            'title'       => 'User',
-            'description' => 'General users of the site. Often customers.',
+            'title'       => 'Usuário',
+            'description' => 'Usuários gerais do site.',
         ],
         'beta' => [
-            'title'       => 'Beta User',
-            'description' => 'Has access to beta-level features.',
+            'title'       => 'Usuário Beta',
+            'description' => 'Acesso a recursos beta.',
         ],
     ];
 
@@ -79,6 +79,31 @@ class AuthGroups extends ShieldAuthGroups
         'users.edit'          => 'Can edit existing non-admin users',
         'users.delete'        => 'Can delete existing non-admin users',
         'beta.access'         => 'Can access beta-level features',
+
+        // Permissões do sistema de Gestão de Permissões
+        'permissoes.gerenciar' => 'Pode gerenciar permissões de usuários',
+
+        // Permissões Módulo Conselho
+        'conselho.visualizar' => 'Pode visualizar dados do conselho',
+        'conselho.editar'     => 'Pode editar dados do conselho',
+        'conselho.deletar'    => 'Pode deletar dados do conselho',
+
+        // Permissões Módulo Usuários (Adicionais/Tradução)
+        'usuarios.visualizar' => 'Pode visualizar lista de usuários',
+        'usuarios.editar'     => 'Pode editar usuários',
+        'usuarios.deletar'    => 'Pode deletar usuários',
+
+        // Permissões Módulo Profissionais
+        'profissionais.listar'   => 'Pode listar profissionais',
+        'profissionais.criar'    => 'Pode criar profissionais',
+        'profissionais.editar'   => 'Pode editar profissionais',
+        'profissionais.excluir'  => 'Pode excluir profissionais',
+
+        // Permissões Módulo Profissões
+        'profissoes.listar'   => 'Pode listar profissões',
+        'profissoes.criar'    => 'Pode criar profissões',
+        'profissoes.editar'   => 'Pode editar profissões',
+        'profissoes.excluir'  => 'Pode excluir profissões',
     ];
 
     /**
@@ -94,6 +119,9 @@ class AuthGroups extends ShieldAuthGroups
             'admin.*',
             'users.*',
             'beta.*',
+            'conselho.*',
+            'usuarios.*',
+            'permissoes.*',
         ],
         'admin' => [
             'admin.access',
@@ -101,6 +129,11 @@ class AuthGroups extends ShieldAuthGroups
             'users.edit',
             'users.delete',
             'beta.access',
+            'conselho.*',
+            'usuarios.*',
+            'permissoes.gerenciar',
+            'profissionais.*',
+            'profissoes.*',
         ],
         'developer' => [
             'admin.access',

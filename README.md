@@ -1,68 +1,114 @@
-# CodeIgniter 4 Application Starter
+# Sistema de Gerenciamento de Conselhos
 
-## What is CodeIgniter?
+Este repositório contém o código-fonte do Sistema de Gerenciamento de Conselhos, uma aplicação web desenvolvida em PHP utilizando o framework CodeIgniter 4.
 
-CodeIgniter is a PHP full-stack web framework that is light, fast, flexible and secure.
-More information can be found at the [official site](https://codeigniter.com).
+## Visão Geral
 
-This repository holds a composer-installable app starter.
-It has been built from the
-[development repository](https://github.com/codeigniter4/CodeIgniter4).
+O sistema tem como objetivo gerenciar conselhos profissionais, profissionais associados, profissões e dados de usuários. Ele oferece funcionalidades de CRUD (Create, Read, Update, Delete), controle de acesso baseado em permissões e validação de dados, incluindo CPF.
 
-More information about the plans for version 4 can be found in [CodeIgniter 4](https://forum.codeigniter.com/forumdisplay.php?fid=28) on the forums.
+## Funcionalidades Principais
 
-You can read the [user guide](https://codeigniter.com/user_guide/)
-corresponding to the latest version of the framework.
+- **Gerenciamento de Conselhos:** Cadastro, edição e listagem de conselhos.
+- **Gerenciamento de Profissionais:** Cadastro completo de profissionais, incluindo upload de foto e associação com múltiplas profissões.
+- **Gerenciamento de Profissões:** Cadastro e manutenção de profissões.
+- **Controle de Permissões:** Sistema granular de permissões por usuário e grupo (via CodeIgniter Shield).
+- **Dados de Usuários:** Gerenciamento de dados complementares de usuários (CPF, endereço, foto, etc.).
+- **Validação de CPF:** Validação customizada de CPF integrada ao sistema.
 
-## Installation & updates
+## Requisitos do Sistema
 
-`composer create-project codeigniter4/appstarter` then `composer update` whenever
-there is a new release of the framework.
+- PHP 7.4 ou superior (recomendado 8.1+)
+- Extensão PHP `intl`
+- Extensão PHP `mbstring`
+- Extensão PHP `gd` (para manipulação de imagens)
+- MySQL ou MariaDB
+- Composer
 
-When updating, check the release notes to see if there are any changes you might need to apply
-to your `app` folder. The affected files can be copied or merged from
-`vendor/codeigniter4/framework/app`.
+## Instalação
 
-## Setup
+1.  **Clone o repositório:**
 
-Copy `env` to `.env` and tailor for your app, specifically the baseURL
-and any database settings.
+    ```bash
+    git clone https://github.com/seu-usuario/conselhos.git
+    cd conselhos
+    ```
 
-## Important Change with index.php
+2.  **Instale as dependências:**
 
-`index.php` is no longer in the root of the project! It has been moved inside the *public* folder,
-for better security and separation of components.
+    ```bash
+    composer install
+    ```
 
-This means that you should configure your web server to "point" to your project's *public* folder, and
-not to the project root. A better practice would be to configure a virtual host to point there. A poor practice would be to point your web server to the project root and expect to enter *public/...*, as the rest of your logic and the
-framework are exposed.
+3.  **Configure o ambiente:**
 
-**Please** read the user guide for a better explanation of how CI4 works!
+    Copie o arquivo `env` para `.env` e configure as variáveis de banco de dados e URL base:
 
-## Repository Management
+    ```ini
+    cp env .env
+    ```
 
-We use GitHub issues, in our main repository, to track **BUGS** and to track approved **DEVELOPMENT** work packages.
-We use our [forum](http://forum.codeigniter.com) to provide SUPPORT and to discuss
-FEATURE REQUESTS.
+    Edite o arquivo `.env`:
 
-This repository is a "distribution" one, built by our release preparation script.
-Problems with it can be raised on our forum, or as issues in the main repository.
+    ```ini
+    CI_ENVIRONMENT = development
+    app.baseURL = 'http://localhost/conselhos'
 
-## Server Requirements
+    database.default.hostname = localhost
+    database.default.database = nome_do_banco
+    database.default.username = usuario
+    database.default.password = senha
+    database.default.DBDriver = MySQLi
+    ```
 
-PHP version 8.1 or higher is required, with the following extensions installed:
+4.  **Execute as migrações:**
 
-- [intl](http://php.net/manual/en/intl.requirements.php)
-- [mbstring](http://php.net/manual/en/mbstring.installation.php)
+    ```bash
+    php spark migrate
+    ```
 
-> [!WARNING]
-> - The end of life date for PHP 7.4 was November 28, 2022.
-> - The end of life date for PHP 8.0 was November 26, 2023.
-> - If you are still using PHP 7.4 or 8.0, you should upgrade immediately.
-> - The end of life date for PHP 8.1 will be December 31, 2025.
+5.  **Inicie o servidor de desenvolvimento:**
 
-Additionally, make sure that the following extensions are enabled in your PHP:
+    ```bash
+    php spark serve
+    ```
 
-- json (enabled by default - don't turn it off)
-- [mysqlnd](http://php.net/manual/en/mysqlnd.install.php) if you plan to use MySQL
-- [libcurl](http://php.net/manual/en/curl.requirements.php) if you plan to use the HTTP\CURLRequest library
+    Acesse `http://localhost:8080` no seu navegador.
+
+## Estrutura do Projeto
+
+- `app/Controllers`: Controladores da aplicação (lógica de fluxo).
+- `app/Models`: Modelos de dados (interação com o banco de dados).
+- `app/Views`: Arquivos de visualização (HTML/PHP).
+- `app/Traits`: Traits reutilizáveis (ex: `ValidarCpfTrait`).
+- `app/Validation`: Regras de validação customizadas.
+- `app/Config`: Arquivos de configuração (Rotas, Banco de Dados, etc.).
+
+## Uso
+
+### Usuários e Permissões
+
+O sistema utiliza o CodeIgniter Shield para autenticação. Usuários podem ser gerenciados via banco de dados ou interface administrativa (se implementada). As permissões são definidas em `app/Config/AuthGroups.php` e podem ser atribuídas a grupos ou diretamente a usuários.
+
+### Validação de CPF
+
+A validação de CPF é feita através da regra `valid_cpf`, disponível globalmente. Ela utiliza a trait `App\Traits\ValidarCpfTrait`.
+
+Exemplo de uso em um Model:
+
+```php
+protected $validationRules = [
+    'cpf' => 'required|valid_cpf'
+];
+```
+
+## Contribuição
+
+1.  Faça um Fork do projeto.
+2.  Crie uma Branch para sua Feature (`git checkout -b feature/MinhaFeature`).
+3.  Faça o Commit de suas mudanças (`git commit -m 'Adiciona MinhaFeature'`).
+4.  Faça o Push para a Branch (`git push origin feature/MinhaFeature`).
+5.  Abra um Pull Request.
+
+## Licença
+
+Este projeto está licenciado sob a licença MIT - veja o arquivo [LICENSE](LICENSE) para detalhes.
