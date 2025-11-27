@@ -61,4 +61,15 @@ $routes->group('profissoes', function ($routes) {
     $routes->get('delete/(:num)', 'Profissoes::delete/$1', ['filter' => 'permissoes:profissoes.excluir']);
 });
 
+// Rotas de Empresas
+$routes->group('empresas', function ($routes) {
+    $routes->get('/', 'Empresas::index', ['filter' => 'permissoes:empresas.listar']);
+    $routes->get('new', 'Empresas::new', ['filter' => 'permissoes:empresas.criar']);
+    $routes->post('create', 'Empresas::create', ['filter' => 'permissoes:empresas.criar']);
+    $routes->get('edit/(:num)', 'Empresas::edit/$1', ['filter' => 'permissoes:empresas.editar']);
+    $routes->post('update/(:num)', 'Empresas::update/$1', ['filter' => 'permissoes:empresas.editar']);
+    $routes->get('delete/(:num)', 'Empresas::delete/$1', ['filter' => 'permissoes:empresas.excluir']);
+    $routes->get('logo/(:num)', 'Empresas::logo/$1');
+});
+
 service('auth')->routes($routes);
