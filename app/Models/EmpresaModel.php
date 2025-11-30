@@ -36,7 +36,7 @@ class EmpresaModel extends Model
     // Regras de validação
     protected $validationRules = [
         'razao_social' => 'required|min_length[3]|max_length[255]',
-        'cnpj'         => 'required|exact_length[14]|is_unique[empresas.cnpj,id,{id}]|validaCnpj',
+        'cnpj'         => 'required|exact_length[14]|is_unique[empresas.cnpj,id,{id}]|valid_cnpj',
         'email'        => 'permit_empty|valid_email|max_length[255]',
         'telefone'     => 'permit_empty|max_length[20]',
     ];
@@ -49,7 +49,7 @@ class EmpresaModel extends Model
             'required'    => 'O CNPJ é obrigatório.',
             'is_unique'   => 'Este CNPJ já está cadastrado.',
             'exact_length'=> 'O CNPJ deve ter 14 dígitos.',
-            'validaCnpj'  => 'CNPJ inválido.',
+            'valid_cnpj'  => 'CNPJ inválido.',
         ],
         'email' => [
             'valid_email' => 'Por favor, insira um e-mail válido.',
