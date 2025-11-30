@@ -72,4 +72,14 @@ $routes->group('empresas', function ($routes) {
     $routes->get('logo/(:num)', 'Empresas::logo/$1');
 });
 
+// Rotas de Atribuições
+$routes->group('atribuicoes', function ($routes) {
+    $routes->get('/', 'Atribuicoes::index', ['filter' => 'permissoes:atribuicoes.listar']);
+    $routes->get('new', 'Atribuicoes::new', ['filter' => 'permissoes:atribuicoes.criar']);
+    $routes->post('create', 'Atribuicoes::create', ['filter' => 'permissoes:atribuicoes.criar']);
+    $routes->get('edit/(:num)', 'Atribuicoes::edit/$1', ['filter' => 'permissoes:atribuicoes.editar']);
+    $routes->post('update/(:num)', 'Atribuicoes::update/$1', ['filter' => 'permissoes:atribuicoes.editar']);
+    $routes->get('delete/(:num)', 'Atribuicoes::delete/$1', ['filter' => 'permissoes:atribuicoes.excluir']);
+});
+
 service('auth')->routes($routes);

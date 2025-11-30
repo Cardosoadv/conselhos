@@ -110,6 +110,12 @@ class AuthGroups extends ShieldAuthGroups
         'empresas.criar'      => 'Pode criar empresas',
         'empresas.editar'     => 'Pode editar empresas',
         'empresas.excluir'    => 'Pode excluir empresas',
+
+        // Permissões Módulo Atribuições
+        'atribuicoes.listar'  => 'Pode listar atribuições',
+        'atribuicoes.criar'   => 'Pode criar atribuições',
+        'atribuicoes.editar'  => 'Pode editar atribuições',
+        'atribuicoes.excluir' => 'Pode excluir atribuições',
     ];
 
     /**
@@ -141,6 +147,7 @@ class AuthGroups extends ShieldAuthGroups
             'profissionais.*',
             'profissoes.*',
             'empresas.*',
+            'atribuicoes.*',
         ],
         'developer' => [
             'admin.access',
