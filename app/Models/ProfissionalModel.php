@@ -41,7 +41,20 @@ class ProfissionalModel extends Model
         'email'           => 'permit_empty|valid_email|max_length[255]',
         'numero_registro' => 'required|is_unique[profissionais.numero_registro,id,{id}]',
     ];
-    protected $validationMessages   = [];
+    protected $validationMessages = [
+        'nome' => [
+            'required' => 'O nome é obrigatório.',
+        ],
+        'cpf' => [
+            'required'    => 'O CPF é obrigatório.',
+            'is_unique'   => 'Este CPF já está cadastrado.',
+            'exact_length'=> 'O CPF deve ter 11 dígitos.',
+            'valid_cpf'  => 'CPF inválido.',
+        ],
+        'email' => [
+            'valid_email' => 'Por favor, insira um e-mail válido.',
+        ],
+    ];
     protected $skipValidation       = false;
     protected $cleanValidationRules = true;
 
