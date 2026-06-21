@@ -1,8 +1,14 @@
 # Relatório de Evolução do Projeto Conselhos
 
-**Versão atual:** 1.1.2
+**Versão atual:** 1.1.4
 
 ## Histórico de Versões
+
+### v1.1.4 - 21/06/2026
+- **Configuração:** Geração de secret aleatório para o `JWT_SECRET` no arquivo `.env` do backend.
+
+### v1.1.3 - 21/06/2026
+- **Backend:** Refatoração do `authController.ts` para utilizar as funções do `userModel.ts` em todas as transações com o banco de dados (register, login, getMe).
 
 ### v1.1.2 - 21/06/2026
 - **Banco de Dados:** Criação de script `migrate.ts` para execução de migrations pendentes, correção da tabela de migrations no `db.ts` e ajuste na sintaxe e tipagem da migration de usuários (`0001_user.ts`).
