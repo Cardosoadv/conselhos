@@ -4,13 +4,13 @@ import dotenv from 'dotenv';
 dotenv.config();
 
 const pool = mysql.createPool({
-  host: process.env['database.default.hostname'] || 'localhost',
-  user: process.env['database.default.username'] || 'sistema',
-  password: process.env['database.default.password'] || '123456',
-  database: process.env['database.default.database'] || 'conselhos',
+  host:               process.env['database.default.hostname'],
+  user:               process.env['database.default.username'],
+  password:           process.env['database.default.password'],
+  database:           process.env['database.default.database'],
   waitForConnections: true,
-  connectionLimit: 10,
-  queueLimit: 0
+  connectionLimit:    10,
+  queueLimit:         0
 });
 
 // Initialize database
@@ -21,16 +21,15 @@ export const initDB = async () => {
 
     // Criar tabela de usuários se não existir
     await connection.query(`
-      CREATE TABLE IF NOT EXISTS users (
+      CREATE TABLE IF NOT EXISTS migrations (
         id INT AUTO_INCREMENT PRIMARY KEY,
-        name VARCHAR(255) NOT NULL,
-        email VARCHAR(255) NOT NULL UNIQUE,
-        password VARCHAR(255) NOT NULL,
-        created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP
+        version VARCHAR(25) NOT NULL,
+        name VARCHAR(25) NOT NULL,
+        date TIMESTAMP DEFAULT CURRENT_TIMESTAMP
       )
     `);
-    console.log('✅ Tabela users verificada/criada.');
-    
+    console.log('✅ Tabela migrations verificada/criada.');
+
     connection.release();
   } catch (error) {
     console.error('❌ Erro ao conectar ao MySQL:', error);

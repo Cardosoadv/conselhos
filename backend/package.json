@@ -1,11 +1,12 @@
 {
   "name": "backend",
-  "version": "1.1.0",
+  "version": "1.1.2",
   "description": "",
   "main": "index.js",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
-    "dev": "nodemon src/index.ts"
+    "dev": "nodemon src/index.ts",
+    "migrate": "ts-node src/config/migrate.ts"
   },
   "keywords": [],
   "author": "",
