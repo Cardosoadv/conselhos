@@ -1,8 +1,13 @@
 # Relatório de Evolução do Projeto Conselhos
 
-**Versão atual:** 1.1.4
+**Versão atual:** 1.2.0
 
 ## Histórico de Versões
+
+### v1.2.0 - 21/06/2026
+- **Configuração do Sistema:** Criação de módulo para gerenciar as configurações gerais e dados cadastrais da entidade (Sistema de Profissões, Nível, Razão Social, CNPJ, Endereço e Contatos).
+- **Backend:** Adicionada tabela `settings`, rota de API protegida (`/api/settings`) e função validadora de CNPJ alfanumérico.
+- **Frontend:** Nova página `Settings` estruturada em abas, validação de CNPJ, integração com API e novo atalho na barra lateral.
 
 ### v1.1.4 - 21/06/2026
 - **Configuração:** Geração de secret aleatório para o `JWT_SECRET` no arquivo `.env` do backend.

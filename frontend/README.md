@@ -2,7 +2,7 @@
 
 Sistema administrativo para gerenciamento de conselhos e processos.
 
-![Versão](https://img.shields.io/badge/Versão-1.1.0-blue.svg)
+![Versão](https://img.shields.io/badge/Versão-1.2.0-blue.svg)
 ![React](https://img.shields.io/badge/React-19.2-blue)
 ![Express](https://img.shields.io/badge/Express-5.2-green)
 ![TypeScript](https://img.shields.io/badge/TypeScript-6.0-blue)

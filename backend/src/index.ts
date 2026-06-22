@@ -2,6 +2,7 @@ import express, { Request, Response } from 'express';
 import cors from 'cors';
 import dotenv from 'dotenv';
 import authRoutes from './routes/authRoutes';
+import settingsRoutes from './routes/settingsRoutes';
 import { initDB } from './config/db';
 
 dotenv.config();
@@ -14,6 +15,7 @@ app.use(express.json());
 
 // Rotas da API
 app.use('/api/auth', authRoutes);
+app.use('/api/settings', settingsRoutes);
 
 // Rota de teste
 app.get('/', (req: Request, res: Response) => {

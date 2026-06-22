@@ -2,7 +2,7 @@ import { Request, Response } from 'express';
 import jwt from 'jsonwebtoken';
 import { findUserByEmail, findUserById, createUser, checkPassword } from '../model/userModel';
 
-const JWT_SECRET = process.env.JWT_SECRET;
+const JWT_SECRET = process.env.JWT_SECRET || 'default_secret';
 
 export const register = async (req: Request, res: Response): Promise<void> => {
   try {
