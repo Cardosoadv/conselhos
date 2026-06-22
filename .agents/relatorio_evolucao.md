@@ -1,8 +1,14 @@
 # Relatório de Evolução do Projeto Conselhos
 
-**Versão atual:** 1.2.0
+**Versão atual:** 1.2.2
 
 ## Histórico de Versões
+
+### v1.2.2 - 22/06/2026
+- **Agentes:** Atualização generalizada das skills dos agentes (CodeHealth, Davinci, Palette, Sentinel e Bolt) para corresponder ao stack atual do projeto (Express + React). Inserida a regra de arquitetura estrita do backend em camadas (Controllers, Services e Models) e o uso de componentes/hooks no frontend React.
+
+### v1.2.1 - 22/06/2026
+- **Agentes:** Atualização das skills do agente Bolt para corresponder ao stack atual do projeto (Express + React).
 
 ### v1.2.0 - 21/06/2026
 - **Configuração do Sistema:** Criação de módulo para gerenciar as configurações gerais e dados cadastrais da entidade (Sistema de Profissões, Nível, Razão Social, CNPJ, Endereço e Contatos).
