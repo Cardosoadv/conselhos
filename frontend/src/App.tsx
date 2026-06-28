@@ -5,6 +5,7 @@ import { useContext } from 'react';
 import Login from './pages/Login';
 import Register from './pages/Register';
 import Settings from './pages/Settings';
+import Professions from './pages/Professions';
 
 function Layout({ children }: { children: React.ReactNode }) {
   const { user, logout } = useContext(AuthContext);
@@ -35,6 +36,11 @@ function Layout({ children }: { children: React.ReactNode }) {
           <li>
             <a href="/processos">
               <i className="nav-icon">📄</i> Processos
+            </a>
+          </li>
+          <li>
+            <a href="/professions">
+              <i className="nav-icon">💼</i> Profissões
             </a>
           </li>
           <li>
@@ -145,6 +151,7 @@ export default function App() {
           <Route element={<ProtectedRoute />}>
             <Route path="/" element={<Layout><Dashboard /></Layout>} />
             <Route path="/processos" element={<Layout><Processos /></Layout>} />
+            <Route path="/professions" element={<Layout><Professions /></Layout>} />
             <Route path="/settings" element={<Layout><Settings /></Layout>} />
           </Route>
         </Routes>

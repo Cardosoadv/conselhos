@@ -1,0 +1,8 @@
+export const query = `
+    CREATE TABLE IF NOT EXISTS atribuicoes (
+      id INT UNSIGNED AUTO_INCREMENT PRIMARY KEY,
+      atribuicoes TEXT,
+      created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
+      updated_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP
+    )
+  `;

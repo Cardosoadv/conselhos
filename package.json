@@ -1,0 +1,16 @@
+{
+  "name": "Gestão de Conselhos - Frontend",
+  "private": true,
+  "version": "1.2.2",
+  "type": "module",
+  "scripts": {
+    "dev": "vite",
+    "build": "tsc -b && vite build",
+    "lint": "eslint .",
+    "start": "npx tsx start.ts",
+    "preview": "vite preview"
+  },
+  "devDependencies": {
+    "@types/node": "^26.0.1"
+  }
+}

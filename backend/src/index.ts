@@ -3,6 +3,7 @@ import cors from 'cors';
 import dotenv from 'dotenv';
 import authRoutes from './routes/authRoutes';
 import settingsRoutes from './routes/settingsRoutes';
+import professionRoutes from './routes/professionRoutes';
 import { initDB } from './config/db';
 
 dotenv.config();
@@ -16,6 +17,7 @@ app.use(express.json());
 // Rotas da API
 app.use('/api/auth', authRoutes);
 app.use('/api/settings', settingsRoutes);
+app.use('/api/professions', professionRoutes);
 
 // Rota de teste
 app.get('/', (req: Request, res: Response) => {

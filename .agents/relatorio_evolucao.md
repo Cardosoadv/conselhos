@@ -1,8 +1,14 @@
 # Relatório de Evolução do Projeto Conselhos
 
-**Versão atual:** 1.2.2
+**Versão atual:** 1.3.0
 
 ## Histórico de Versões
+
+### v1.3.0 - 27/06/2026
+- **Feature Profissões:** Implementação do módulo de Cadastro de Profissões (CRUD completo).
+- **Backend:** Criação das migrations (`0003_atribuicoes.ts`, `0004_professions.ts`), model, controller e service seguindo a arquitetura em camadas. Rota `/api/professions` registrada.
+- **Frontend:** Criação da página `Professions.tsx`, serviço `professionService.ts` via Axios e link no menu lateral (`App.tsx`).
+- **Automação:** Correção de erros no `start.ts` (ajustes para ES Modules, tipagem e fechamento de blocos) e instalação de dependência `@types/node`.
 
 ### v1.2.2 - 22/06/2026
 - **Agentes:** Atualização generalizada das skills dos agentes (CodeHealth, Davinci, Palette, Sentinel e Bolt) para corresponder ao stack atual do projeto (Express + React). Inserida a regra de arquitetura estrita do backend em camadas (Controllers, Services e Models) e o uso de componentes/hooks no frontend React.
