@@ -8,7 +8,8 @@ import {
   Typography, 
   Paper,
   Snackbar,
-  Alert
+  Alert,
+  MenuItem
 } from '@mui/material';
 import { getSettings, updateSettings, type Settings as SettingsType } from '../services/settingsService';
 import { validateCNPJ } from '../utils/cnpjValidator';
@@ -50,7 +51,10 @@ export default function Settings() {
     endereco: '',
     telefone: '',
     email: '',
-    logotipo: ''
+    logotipo: '',
+    registro_tipo: 'unico',
+    registro_inicio: 1,
+    registro_fim: 999999
   });
 
   const [loading, setLoading] = useState(false);
@@ -131,6 +135,7 @@ export default function Settings() {
           <Tabs value={tabValue} onChange={handleTabChange} aria-label="settings tabs">
             <Tab label="Identificação" />
             <Tab label="Contato e Endereço" />
+            <Tab label="Configuração de Registro" />
           </Tabs>
         </Box>
 
@@ -209,6 +214,41 @@ export default function Settings() {
               fullWidth
               multiline
               rows={3}
+            />
+          </Box>
+        </CustomTabPanel>
+
+        <CustomTabPanel value={tabValue} index={2}>
+          <Box display="flex" flexDirection="column" gap={3}>
+            <TextField
+              select
+              label="Tipo de Numeração de Registro"
+              name="registro_tipo"
+              value={settings.registro_tipo || 'unico'}
+              onChange={handleInputChange}
+              fullWidth
+              helperText="Define se a numeração de registro sequencial é única por profissional ou se cada profissão recebe um número diferente"
+            >
+              <MenuItem value="unico">Único por Profissional</MenuItem>
+              <MenuItem value="por_profissao">Por Profissão do Profissional</MenuItem>
+            </TextField>
+            <TextField
+              label="Início da Faixa de Registro"
+              name="registro_inicio"
+              type="number"
+              value={settings.registro_inicio !== undefined ? settings.registro_inicio : 1}
+              onChange={handleInputChange}
+              fullWidth
+              helperText="O menor número de registro permitido para geração automática"
+            />
+            <TextField
+              label="Fim da Faixa de Registro"
+              name="registro_fim"
+              type="number"
+              value={settings.registro_fim !== undefined ? settings.registro_fim : 999999}
+              onChange={handleInputChange}
+              fullWidth
+              helperText="O maior número de registro permitido para geração automática"
             />
           </Box>
         </CustomTabPanel>
