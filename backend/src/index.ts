@@ -4,6 +4,7 @@ import dotenv from 'dotenv';
 import authRoutes from './routes/authRoutes';
 import settingsRoutes from './routes/settingsRoutes';
 import professionRoutes from './routes/professionRoutes';
+import professionalRoutes from './routes/professionalRoutes';
 import { initDB } from './config/db';
 
 dotenv.config();
@@ -18,6 +19,7 @@ app.use(express.json());
 app.use('/api/auth', authRoutes);
 app.use('/api/settings', settingsRoutes);
 app.use('/api/professions', professionRoutes);
+app.use('/api/professionals', professionalRoutes);
 
 // Rota de teste
 app.get('/', (req: Request, res: Response) => {

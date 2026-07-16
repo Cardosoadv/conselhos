@@ -16,7 +16,10 @@ export const getConfig = async (req: Request, res: Response) => {
         endereco: '',
         telefone: '',
         email: '',
-        logotipo: ''
+        logotipo: '',
+        registro_tipo: 'unico',
+        registro_inicio: 1,
+        registro_fim: 999999
       } as Settings;
     }
     return res.status(200).json(settings);

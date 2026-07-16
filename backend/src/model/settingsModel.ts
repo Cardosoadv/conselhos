@@ -12,6 +12,9 @@ export interface Settings {
   telefone: string;
   email: string;
   logotipo: string;
+  registro_tipo: string;
+  registro_inicio: number;
+  registro_fim: number;
   created_at?: Date;
   updated_at?: Date;
 }
@@ -34,15 +37,19 @@ export const updateSettings = async (settings: Partial<Settings>): Promise<boole
     endereco,
     telefone,
     email,
-    logotipo
+    logotipo,
+    registro_tipo,
+    registro_inicio,
+    registro_fim
   } = settings;
 
   // We use INSERT ... ON DUPLICATE KEY UPDATE to handle both cases where the row might not exist yet
   const query = `
     INSERT INTO settings (
-      id, sistema_profissoes, nivel, razao_social, cnpj, sede, endereco, telefone, email, logotipo
+      id, sistema_profissoes, nivel, razao_social, cnpj, sede, endereco, telefone, email, logotipo,
+      registro_tipo, registro_inicio, registro_fim
     ) VALUES (
-      1, ?, ?, ?, ?, ?, ?, ?, ?, ?
+      1, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?
     ) ON DUPLICATE KEY UPDATE
       sistema_profissoes = VALUES(sistema_profissoes),
       nivel = VALUES(nivel),
@@ -52,7 +59,10 @@ export const updateSettings = async (settings: Partial<Settings>): Promise<boole
       endereco = VALUES(endereco),
       telefone = VALUES(telefone),
       email = VALUES(email),
-      logotipo = VALUES(logotipo)
+      logotipo = VALUES(logotipo),
+      registro_tipo = VALUES(registro_tipo),
+      registro_inicio = VALUES(registro_inicio),
+      registro_fim = VALUES(registro_fim)
   `;
 
   const values = [
@@ -64,7 +74,10 @@ export const updateSettings = async (settings: Partial<Settings>): Promise<boole
     endereco || '',
     telefone || '',
     email || '',
-    logotipo || ''
+    logotipo || '',
+    registro_tipo || 'unico',
+    registro_inicio !== undefined ? Number(registro_inicio) : 1,
+    registro_fim !== undefined ? Number(registro_fim) : 999999
   ];
 
   const [result] = await pool.query(query, values);

@@ -10,7 +10,8 @@ const pool = mysql.createPool({
   database:           process.env['database.default.database'],
   waitForConnections: true,
   connectionLimit:    10,
-  queueLimit:         0
+  queueLimit:         0,
+  multipleStatements: true
 });
 
 // Initialize database
@@ -24,7 +25,7 @@ export const initDB = async () => {
       CREATE TABLE IF NOT EXISTS migrations (
         id INT AUTO_INCREMENT PRIMARY KEY,
         version VARCHAR(25) NOT NULL,
-        name VARCHAR(25) NOT NULL,
+        name VARCHAR(100) NOT NULL,
         date TIMESTAMP DEFAULT CURRENT_TIMESTAMP
       )
     `);

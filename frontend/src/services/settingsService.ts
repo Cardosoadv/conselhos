@@ -11,6 +11,9 @@ export interface Settings {
   telefone: string;
   email: string;
   logotipo: string;
+  registro_tipo?: string;
+  registro_inicio?: number;
+  registro_fim?: number;
 }
 
 export const getSettings = async (): Promise<Settings> => {
