@@ -7,6 +7,7 @@ import Register from './pages/Register';
 import Settings from './pages/Settings';
 import Professions from './pages/Professions';
 import Professionals from './pages/Professionals';
+import Companies from './pages/Companies';
 
 function Layout({ children }: { children: React.ReactNode }) {
   const { user, logout } = useContext(AuthContext);
@@ -47,6 +48,11 @@ function Layout({ children }: { children: React.ReactNode }) {
           <li>
             <a href="/professionals">
               <i className="nav-icon">👤</i> Profissionais
+            </a>
+          </li>
+          <li>
+            <a href="/companies">
+              <i className="nav-icon">🏢</i> Empresas
             </a>
           </li>
           <li>
@@ -159,6 +165,7 @@ export default function App() {
             <Route path="/processos" element={<Layout><Processos /></Layout>} />
             <Route path="/professions" element={<Layout><Professions /></Layout>} />
             <Route path="/professionals" element={<Layout><Professionals /></Layout>} />
+            <Route path="/companies" element={<Layout><Companies /></Layout>} />
             <Route path="/settings" element={<Layout><Settings /></Layout>} />
           </Route>
         </Routes>

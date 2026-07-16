@@ -14,6 +14,7 @@ export interface Settings {
   registro_tipo?: string;
   registro_inicio?: number;
   registro_fim?: number;
+  tipos_vinculo?: string;
 }
 
 export const getSettings = async (): Promise<Settings> => {

@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import { 
   Box, Typography, Paper, Table, TableBody, TableCell, TableContainer, TableHead, TableRow,
-  Button, IconButton, Dialog, DialogTitle, DialogContent, DialogActions, TextField, Snackbar, Alert, Switch, FormControlLabel
+  Button, Dialog, DialogTitle, DialogContent, DialogActions, TextField, Snackbar, Alert, Switch, FormControlLabel
 } from '@mui/material';
 import { getProfessions, createProfession, updateProfession, deleteProfession, type Profession } from '../services/professionService';
 
@@ -102,7 +102,7 @@ export default function Professions() {
 
   return (
     <Box sx={{ p: 3 }}>
-      <Box display="flex" justifyContent="space-between" alignItems="center" mb={3}>
+      <Box sx={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', mb: 3 }}>
         <Typography variant="h4">Profissões</Typography>
         <Button variant="contained" color="primary" onClick={() => handleOpen()}>
           Nova Profissão
@@ -145,7 +145,7 @@ export default function Professions() {
       <Dialog open={open} onClose={handleClose} maxWidth="sm" fullWidth>
         <DialogTitle>{editingId ? 'Editar Profissão' : 'Nova Profissão'}</DialogTitle>
         <DialogContent>
-          <Box display="flex" flexDirection="column" gap={2} mt={1}>
+          <Box sx={{ display: 'flex', flexDirection: 'column', gap: 2, mt: 1 }}>
             <TextField label="Nome" name="name" value={formData.name} onChange={handleInputChange} fullWidth required />
             <TextField label="Descrição" name="description" value={formData.description} onChange={handleInputChange} fullWidth multiline rows={3} />
             <TextField label="Fundamento Legal" name="fundamento_legal" value={formData.fundamento_legal} onChange={handleInputChange} fullWidth />

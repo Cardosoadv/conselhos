@@ -54,7 +54,8 @@ export default function Settings() {
     logotipo: '',
     registro_tipo: 'unico',
     registro_inicio: 1,
-    registro_fim: 999999
+    registro_fim: 999999,
+    tipos_vinculo: 'Responsável Técnico'
   });
 
   const [loading, setLoading] = useState(false);
@@ -70,14 +71,17 @@ export default function Settings() {
     try {
       const data = await getSettings();
       if (data) {
-        setSettings(data);
+        setSettings({
+          ...data,
+          tipos_vinculo: data.tipos_vinculo || 'Responsável Técnico'
+        });
       }
     } catch (error) {
       console.error('Erro ao buscar configurações', error);
     }
   };
 
-  const handleTabChange = (event: React.SyntheticEvent, newValue: number) => {
+  const handleTabChange = (_event: React.SyntheticEvent, newValue: number) => {
     setTabValue(newValue);
   };
 
@@ -106,7 +110,10 @@ export default function Settings() {
     setLoading(true);
     try {
       const result = await updateSettings(settings);
-      setSettings(result.settings);
+      setSettings({
+        ...result.settings,
+        tipos_vinculo: result.settings.tipos_vinculo || 'Responsável Técnico'
+      });
       setSnackbar({ open: true, message: 'Configurações salvas com sucesso!', severity: 'success' });
     } catch (error: any) {
       console.error('Erro ao salvar configurações', error);
@@ -140,7 +147,7 @@ export default function Settings() {
         </Box>
 
         <CustomTabPanel value={tabValue} index={0}>
-          <Box display="flex" flexDirection="column" gap={3}>
+          <Box sx={{ display: 'flex', flexDirection: 'column', gap: 3 }}>
             <TextField
               label="Razão Social"
               name="razao_social"
@@ -183,7 +190,7 @@ export default function Settings() {
         </CustomTabPanel>
 
         <CustomTabPanel value={tabValue} index={1}>
-          <Box display="flex" flexDirection="column" gap={3}>
+          <Box sx={{ display: 'flex', flexDirection: 'column', gap: 3 }}>
             <TextField
               label="E-mail"
               name="email"
@@ -219,7 +226,7 @@ export default function Settings() {
         </CustomTabPanel>
 
         <CustomTabPanel value={tabValue} index={2}>
-          <Box display="flex" flexDirection="column" gap={3}>
+          <Box sx={{ display: 'flex', flexDirection: 'column', gap: 3 }}>
             <TextField
               select
               label="Tipo de Numeração de Registro"
@@ -249,6 +256,14 @@ export default function Settings() {
               onChange={handleInputChange}
               fullWidth
               helperText="O maior número de registro permitido para geração automática"
+            />
+            <TextField
+              label="Tipos de Vínculo de Empresa"
+              name="tipos_vinculo"
+              value={settings.tipos_vinculo || ''}
+              onChange={handleInputChange}
+              fullWidth
+              helperText="Lista de tipos de vínculo permitidos para associar profissionais a empresas, separados por vírgula."
             />
           </Box>
         </CustomTabPanel>
