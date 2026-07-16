@@ -19,8 +19,11 @@ export const getConfig = async (req: Request, res: Response) => {
         logotipo: '',
         registro_tipo: 'unico',
         registro_inicio: 1,
-        registro_fim: 999999
+        registro_fim: 999999,
+        tipos_vinculo: 'Responsável Técnico'
       } as Settings;
+    } else if (!settings.tipos_vinculo) {
+      settings.tipos_vinculo = 'Responsável Técnico';
     }
     return res.status(200).json(settings);
   } catch (error) {

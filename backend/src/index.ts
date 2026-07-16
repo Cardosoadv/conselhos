@@ -5,6 +5,7 @@ import authRoutes from './routes/authRoutes';
 import settingsRoutes from './routes/settingsRoutes';
 import professionRoutes from './routes/professionRoutes';
 import professionalRoutes from './routes/professionalRoutes';
+import companyRoutes from './routes/companyRoutes';
 import { initDB } from './config/db';
 
 dotenv.config();
@@ -20,6 +21,7 @@ app.use('/api/auth', authRoutes);
 app.use('/api/settings', settingsRoutes);
 app.use('/api/professions', professionRoutes);
 app.use('/api/professionals', professionalRoutes);
+app.use('/api/companies', companyRoutes);
 
 // Rota de teste
 app.get('/', (req: Request, res: Response) => {
