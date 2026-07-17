@@ -1,3 +1,4 @@
+import { useNavigate } from "react-router-dom";
 import React, { useState, useEffect } from 'react';
 import {
   Box, Typography, Paper, Table, TableBody, TableCell, TableContainer, TableHead, TableRow,
@@ -11,6 +12,7 @@ import { getSettings } from '../services/settingsService';
 import { validateCNPJ } from '../utils/cnpjValidator';
 
 export default function Companies() {
+  const navigate = useNavigate();
   const [companies, setCompanies] = useState<Company[]>([]);
   const [professionalsList, setProfessionalsList] = useState<Professional[]>([]);
   const [linkTypes, setLinkTypes] = useState<string[]>(['Responsável Técnico']);
@@ -286,6 +288,15 @@ export default function Companies() {
                   )}
                 </TableCell>
                 <TableCell align="right">
+                  <Button
+                    size="small"
+                    variant="outlined"
+                    color="success"
+                    onClick={() => comp.id && navigate(`/processos?company_id=${comp.id}`)}
+                    sx={{ mr: 1, textTransform: 'none' }}
+                  >
+                    Processo SEI
+                  </Button>
                   <Button size="small" onClick={() => handleOpen(comp)}>Editar</Button>
                   <Button size="small" color="error" onClick={() => comp.id && handleDeleteComp(comp.id)}>Excluir</Button>
                 </TableCell>
