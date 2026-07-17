@@ -2,7 +2,7 @@
 
 Sistema administrativo para gerenciamento de conselhos e processos, estruturado em um formato Full-Stack (Frontend e Backend).
 
-![Versão](https://img.shields.io/badge/Versão-1.3.1-blue.svg)
+![Versão](https://img.shields.io/badge/Versão-1.3.3-blue.svg)
 ![React](https://img.shields.io/badge/React-19.2-blue)
 ![Express](https://img.shields.io/badge/Express-5.2-green)
 ![TypeScript](https://img.shields.io/badge/TypeScript-6.0-blue)

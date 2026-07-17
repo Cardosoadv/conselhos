@@ -394,13 +394,13 @@ export default function Processos() {
     return `data:application/pdf;base64,${content}`;
   };
 
-  // Render official SEI visualizer view
+  // Render official visualizer view
   const renderSEIView = () => {
     if (!selectedProcess) return null;
 
     return (
       <Box sx={{ display: 'flex', flexDirection: 'column', height: 'calc(100vh - 120px)', border: '1px solid #c3c3c3', borderRadius: '4px', overflow: 'hidden' }}>
-        {/* SEI GREEN HEADER BANNER */}
+        {/* PROTOCOLO GREEN HEADER BANNER */}
         <Box sx={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', backgroundColor: '#1c5230', color: 'white', px: 2, py: 1.5 }}>
           <Box sx={{ display: 'flex', alignItems: 'center', gap: 1 }}>
             <Typography variant="h5" sx={{ fontWeight: 'bold', fontStyle: 'italic', letterSpacing: '1px', display: 'flex', alignItems: 'center' }}>
@@ -428,7 +428,7 @@ export default function Processos() {
           </Button>
         </Box>
 
-        {/* SEI ACTION ICON TOOLBAR */}
+        {/* PROTOCOLO ACTION ICON TOOLBAR */}
         <Box sx={{ display: 'flex', gap: 1, backgroundColor: '#f1f1f1', borderBottom: '1px solid #c3c3c3', p: 1, flexWrap: 'wrap' }}>
           <Tooltip title="Incluir Documento de Texto (HTML)">
             <Button
@@ -484,14 +484,14 @@ export default function Processos() {
           )}
         </Box>
 
-        {/* SEI SPLIT WORKSPACE: LEFT TREE PANEL & RIGHT DOC VISUALIZER */}
+        {/* PROTOCOLO SPLIT WORKSPACE: LEFT TREE PANEL & RIGHT DOC VISUALIZER */}
         <Box sx={{ display: 'flex', flexGrow: 1, overflow: 'hidden' }}>
 
           {/* LEFT SIDEBAR: PROCESS TREE */}
           <Box sx={{ width: '320px', minWidth: '300px', backgroundColor: '#f9f9f9', borderRight: '1px solid #c3c3c3', display: 'flex', flexDirection: 'column' }}>
             <Box sx={{ p: 2, backgroundColor: '#eaedea', borderBottom: '1px solid #c3c3c3' }}>
               <Typography variant="subtitle2" color="textSecondary" sx={{ fontSize: '0.75rem', textTransform: 'uppercase', letterSpacing: '0.5px', fontWeight: 'bold' }}>
-                Processo SEI nº
+                Processo nº
               </Typography>
               <Typography variant="h6" sx={{ fontWeight: 'bold', color: '#1c5230', mt: 0.5 }}>
                 {selectedProcess.process_number}
@@ -587,7 +587,7 @@ export default function Processos() {
                     overflow: 'hidden'
                   }}
                 >
-                  {/* SEI ELECTRONIC SIGNATURE SEAL WATERMARK BANNER */}
+                  {/* PROTOCOLO ELECTRONIC SIGNATURE SEAL WATERMARK BANNER */}
                   {selectedDocument.signed_by && (
                     <Box sx={{
                       position: 'absolute',
@@ -640,7 +640,7 @@ export default function Processos() {
                     </Box>
                   )}
 
-                  {/* SEI OFFICAL SEAL BLOCK AT BOTTOM IF SIGNED */}
+                  {/* PROTOCOLO OFFICAL SEAL BLOCK AT BOTTOM IF SIGNED */}
                   {selectedDocument.signed_by && (
                     <Box sx={{
                       mt: 6,

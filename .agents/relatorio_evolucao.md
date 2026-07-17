@@ -1,8 +1,16 @@
 # Relatório de Evolução do Projeto Conselhos
 
-**Versão atual:** 1.3.0
+**Versão atual:** 1.3.3
 
 ## Histórico de Versões
+
+### v1.3.3 - 17/07/2026
+- **Backend:** Aumento do limite de payload do `express.json` e `express.urlencoded` para `10mb` no `index.ts` para corrigir o erro 413 (Payload Too Large) no envio de arquivos/documentos.
+
+
+### v1.3.2 - 17/07/2026
+- **Banco de Dados:** Ajuste no tamanho da coluna `name` da tabela `migrations` (para `VARCHAR(100)`) corrigindo o erro `Data too long for column 'name'`.
+- **Migrations:** Execução bem-sucedida das migrations `0005`, `0006`, `0007`, e `0008`.
 
 ### v1.3.0 - 27/06/2026
 - **Feature Profissões:** Implementação do módulo de Cadastro de Profissões (CRUD completo).

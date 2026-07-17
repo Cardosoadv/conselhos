@@ -51,7 +51,7 @@ export const generateProfessionalFichaHTML = async (prof: Professional): Promise
 
   return `
     <div style="font-family: Arial, sans-serif; color: #333; line-height: 1.6; max-width: 800px; margin: 0 auto; padding: 20px;">
-      <!-- CABEÇALHO OFICIAL SEI -->
+      <!-- CABEÇALHO OFICIAL -->
       <table style="width: 100%; border-collapse: collapse; margin-bottom: 30px;">
         <tr>
           <td style="width: 15%; text-align: center; vertical-align: middle;">
@@ -141,7 +141,7 @@ export const generateProfessionalFichaHTML = async (prof: Professional): Promise
         </div>
       </div>
 
-      <!-- RODAPÉ DE VALIDAÇÃO ELETRÔNICA SEI -->
+      <!-- RODAPÉ DE VALIDAÇÃO ELETRÔNICA -->
       <div style="margin-top: 50px; border-top: 2px solid #ccc; padding-top: 15px; font-size: 0.8rem; color: #666; text-align: left;">
         <table style="width: 100%; border-collapse: collapse;">
           <tr>
@@ -150,7 +150,7 @@ export const generateProfessionalFichaHTML = async (prof: Professional): Promise
             </td>
             <td style="vertical-align: top; padding-left: 10px;">
               <span style="font-weight: bold; color: #333;">Documento Gerado Eletronicamente</span><br/>
-              Este documento foi produzido e certificado eletronicamente pelo módulo de protocolo SEI da Gestão de Conselhos em <strong>${formatDate(new Date())} às ${new Date().toLocaleTimeString('pt-BR')}</strong>.<br/>
+              Este documento foi produzido e certificado eletronicamente pelo módulo de protocolo do Sistema de Gestão de Conselhos em <strong>${formatDate(new Date())} às ${new Date().toLocaleTimeString('pt-BR')}</strong>.<br/>
               A autenticidade deste documento pode ser confirmada em nossos portais oficiais de processos eletrônicos.
             </td>
           </tr>
@@ -174,7 +174,7 @@ export const generateCompanyFichaHTML = async (comp: Company): Promise<string> =
 
   return `
     <div style="font-family: Arial, sans-serif; color: #333; line-height: 1.6; max-width: 800px; margin: 0 auto; padding: 20px;">
-      <!-- CABEÇALHO OFICIAL SEI -->
+      <!-- CABEÇALHO OFICIAL -->
       <table style="width: 100%; border-collapse: collapse; margin-bottom: 30px;">
         <tr>
           <td style="width: 15%; text-align: center; vertical-align: middle;">
@@ -257,7 +257,7 @@ export const generateCompanyFichaHTML = async (comp: Company): Promise<string> =
         </div>
       </div>
 
-      <!-- RODAPÉ DE VALIDAÇÃO ELETRÔNICA SEI -->
+      <!-- RODAPÉ DE VALIDAÇÃO ELETRÔNICA -->
       <div style="margin-top: 50px; border-top: 2px solid #ccc; padding-top: 15px; font-size: 0.8rem; color: #666; text-align: left;">
         <table style="width: 100%; border-collapse: collapse;">
           <tr>
@@ -266,7 +266,7 @@ export const generateCompanyFichaHTML = async (comp: Company): Promise<string> =
             </td>
             <td style="vertical-align: top; padding-left: 10px;">
               <span style="font-weight: bold; color: #333;">Documento Gerado Eletronicamente</span><br/>
-              Este documento foi produzido e certificado eletronicamente pelo módulo de protocolo SEI da Gestão de Conselhos em <strong>${formatDate(new Date())} às ${new Date().toLocaleTimeString('pt-BR')}</strong>.<br/>
+              Este documento foi produzido e certificado eletronicamente pelo módulo de protocolo do Sistema de Gestão de Conselhos em <strong>${formatDate(new Date())} às ${new Date().toLocaleTimeString('pt-BR')}</strong>.<br/>
               A autenticidade deste documento pode ser confirmada em nossos portais oficiais de processos eletrônicos.
             </td>
           </tr>
