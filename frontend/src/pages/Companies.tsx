@@ -295,7 +295,7 @@ export default function Companies() {
                     onClick={() => comp.id && navigate(`/processos?company_id=${comp.id}`)}
                     sx={{ mr: 1, textTransform: 'none' }}
                   >
-                    Processo SEI
+                    Processo Protocolo
                   </Button>
                   <Button size="small" onClick={() => handleOpen(comp)}>Editar</Button>
                   <Button size="small" color="error" onClick={() => comp.id && handleDeleteComp(comp.id)}>Excluir</Button>

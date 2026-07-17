@@ -59,7 +59,7 @@ export const generateProfessionalFichaHTML = async (prof: Professional): Promise
           </td>
           <td style="text-align: center; vertical-align: middle; padding: 0 10px;">
             <h2 style="margin: 0; font-size: 1.3rem; color: #1c5230; text-transform: uppercase;">Conselho Regional de Registro Profissional</h2>
-            <h3 style="margin: 5px 0 0 0; font-size: 1.1rem; color: #555; font-weight: normal;">Sistema Eletrônico de Informações - SEI</h3>
+            <h3 style="margin: 5px 0 0 0; font-size: 1.1rem; color: #555; font-weight: normal;">Sistema de Protocolo</h3>
           </td>
           <td style="width: 15%; text-align: center; vertical-align: middle;">
             <div style="font-size: 1.2rem; font-weight: bold; color: #1c5230;">FICHA</div>
@@ -182,7 +182,7 @@ export const generateCompanyFichaHTML = async (comp: Company): Promise<string> =
           </td>
           <td style="text-align: center; vertical-align: middle; padding: 0 10px;">
             <h2 style="margin: 0; font-size: 1.3rem; color: #1c5230; text-transform: uppercase;">Conselho Regional de Registro Profissional</h2>
-            <h3 style="margin: 5px 0 0 0; font-size: 1.1rem; color: #555; font-weight: normal;">Sistema Eletrônico de Informações - SEI</h3>
+            <h3 style="margin: 5px 0 0 0; font-size: 1.1rem; color: #555; font-weight: normal;">Sistema de Protocolo</h3>
           </td>
           <td style="width: 15%; text-align: center; vertical-align: middle;">
             <div style="font-size: 1.2rem; font-weight: bold; color: #1c5230;">FICHA</div>

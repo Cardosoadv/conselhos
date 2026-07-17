@@ -487,7 +487,7 @@ export default function Professionals() {
                       sx={{ mr: 1, textTransform: 'none' }}
                       startIcon={<DocIcon />}
                     >
-                      Processo SEI
+                      Processo Protocolo
                     </Button>
                     <IconButton color="primary" onClick={() => handleOpenEdit(prof)} size="small">
                       <EditIcon />

@@ -309,7 +309,7 @@ export default function Processos() {
               Módulo de Protocolo e Processos
             </Typography>
             <Typography variant="subtitle1" color="textSecondary">
-              Gerencie os processos administrativos integrados do SEI
+              Gerencie os processos administrativos integrados do Protocolo
             </Typography>
           </Box>
         </Box>
@@ -373,7 +373,7 @@ export default function Processos() {
                         startIcon={<DocIcon />}
                         onClick={() => handleOpenProcess(proc.id)}
                       >
-                        Abrir no SEI
+                        Abrir no Protocolo
                       </Button>
                     </TableCell>
                   </TableRow>
@@ -661,7 +661,7 @@ export default function Processos() {
                           Assinado por <strong>{selectedDocument.signed_by}</strong> em {new Date(selectedDocument.signed_at!).toLocaleString('pt-BR')}.
                         </Typography>
                         <Typography variant="caption" color="textSecondary" sx={{ display: 'block', mt: 0.5, fontSize: '0.7rem' }}>
-                          Assinatura válida em conformidade com as diretrizes do sistema SEI! eletrônico de conselhos sob autenticação única criptográfica.
+                          Assinatura válida em conformidade com as diretrizes do sistema de Protocolo do Conselho sob autenticação única criptográfica.
                         </Typography>
                       </Box>
                     </Box>
@@ -681,7 +681,7 @@ export default function Processos() {
         {/* MODAL: NEW DOC (HTML) */}
         <Dialog open={openNewDocModal} onClose={() => setOpenNewDocModal(false)} maxWidth="md" fullWidth>
           <DialogTitle sx={{ fontWeight: 'bold', color: '#1c5230' }}>
-            Incluir Documento Administrativo (Texto SEI)
+            Incluir Documento Administrativo (Texto do Protocolo)
           </DialogTitle>
           <DialogContent dividers>
             <Stack spacing={3}>
