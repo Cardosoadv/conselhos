@@ -1,3 +1,4 @@
+import { useNavigate } from "react-router-dom";
 import React, { useState, useEffect, useCallback } from 'react';
 import {
   Box,
@@ -8,7 +9,6 @@ import {
   DialogActions,
   DialogContent,
   DialogTitle,
-  Grid,
   IconButton,
   Paper,
   Table,
@@ -29,6 +29,7 @@ import {
 } from '@mui/material';
 import {
   Delete as DeleteIcon,
+  Description as DocIcon,
   Edit as EditIcon,
   Add as AddIcon,
   PhotoCamera,
@@ -114,6 +115,7 @@ const initialForm = (): Professional => ({
 });
 
 export default function Professionals() {
+  const navigate = useNavigate();
   const [professionals, setProfessionals] = useState<Professional[]>([]);
   const [professions, setProfessions] = useState<Profession[]>([]);
   const [settings, setSettings] = useState<Settings | null>(null);
@@ -418,7 +420,7 @@ export default function Professionals() {
 
   return (
     <Box sx={{ p: 3 }}>
-      <Box display="flex" justifyContent="space-between" alignItems="center" mb={3}>
+      <Box sx={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', mb: 3 }}>
         <Typography variant="h4" gutterBottom>
           Cadastro de Profissionais
         </Typography>
@@ -462,7 +464,7 @@ export default function Professionals() {
                     {settings?.registro_tipo === 'unico' ? (
                       <span className="badge bg-primary">Geral: {prof.registration_number || 'Não gerado'}</span>
                     ) : (
-                      <Stack direction="row" spacing={1} flexWrap="wrap" useFlexGap>
+                      <Stack direction="row" spacing={1} useFlexGap sx={{ flexWrap: 'wrap' }}>
                         {prof.professions.map(pId => {
                           const pName = professions.find(p => p.id === pId)?.name || 'Profissão';
                           const regNum = prof.profession_registrations[pId];
@@ -477,6 +479,16 @@ export default function Professionals() {
                     )}
                   </TableCell>
                   <TableCell align="right">
+                    <Button
+                      size="small"
+                      variant="outlined"
+                      color="success"
+                      onClick={() => navigate(`/processos?professional_id=${prof.id}`)}
+                      sx={{ mr: 1, textTransform: 'none' }}
+                      startIcon={<DocIcon />}
+                    >
+                      Processo SEI
+                    </Button>
                     <IconButton color="primary" onClick={() => handleOpenEdit(prof)} size="small">
                       <EditIcon />
                     </IconButton>
@@ -503,16 +515,16 @@ export default function Professionals() {
           {selectedProfId ? 'Editar Profissional' : 'Cadastrar Novo Profissional'}
         </DialogTitle>
         <DialogContent dividers>
-          <Grid container spacing={3}>
+          <div className="row g-3">
             {/* Section 1: Basic Info */}
-            <Grid item xs={12}>
+            <div className="col-12">
               <Typography variant="h6" color="primary" gutterBottom>
                 Dados Básicos
               </Typography>
               <Divider sx={{ mb: 2 }} />
-            </Grid>
+            </div>
 
-            <Grid item xs={12} md={6}>
+            <div className="col-12 col-md-6">
               <TextField
                 required
                 label="Nome Completo"
@@ -521,8 +533,8 @@ export default function Professionals() {
                 onChange={handleInputChange}
                 fullWidth
               />
-            </Grid>
-            <Grid item xs={12} md={6}>
+            </div>
+            <div className="col-12 col-md-6">
               <TextField
                 required
                 label="CPF"
@@ -532,10 +544,10 @@ export default function Professionals() {
                 error={!!cpfError}
                 helperText={cpfError}
                 fullWidth
-                inputProps={{ maxLength: 14 }}
+                slotProps={{ htmlInput: { maxLength: 14 } }}
               />
-            </Grid>
-            <Grid item xs={12} md={4}>
+            </div>
+            <div className="col-12 col-md-4">
               <TextField
                 required
                 label="E-mail"
@@ -545,8 +557,8 @@ export default function Professionals() {
                 onChange={handleInputChange}
                 fullWidth
               />
-            </Grid>
-            <Grid item xs={12} md={4}>
+            </div>
+            <div className="col-12 col-md-4">
               <TextField
                 label="Telefone / Celular"
                 name="phone"
@@ -554,8 +566,8 @@ export default function Professionals() {
                 onChange={handleInputChange}
                 fullWidth
               />
-            </Grid>
-            <Grid item xs={12} md={4}>
+            </div>
+            <div className="col-12 col-md-4">
               <TextField
                 label="Data de Nascimento"
                 name="birth_date"
@@ -563,13 +575,13 @@ export default function Professionals() {
                 value={form.birth_date || ''}
                 onChange={handleInputChange}
                 fullWidth
-                InputLabelProps={{ shrink: true }}
+                slotProps={{ inputLabel: { shrink: true } }}
               />
-            </Grid>
+            </div>
 
             {/* Single Registration field if config is "unico" */}
             {settings?.registro_tipo === 'unico' && (
-              <Grid item xs={12} md={4}>
+              <div className="col-12 col-md-4">
                 <TextField
                   label="Número de Registro Sequencial"
                   name="registration_number"
@@ -579,18 +591,18 @@ export default function Professionals() {
                   fullWidth
                   helperText={`Sugerido automaticamente. Faixa: ${settings.registro_inicio} - ${settings.registro_fim}`}
                 />
-              </Grid>
+              </div>
             )}
 
             {/* Section 2: Biometrics */}
-            <Grid item xs={12} mt={2}>
+            <div className="col-12 mt-2">
               <Typography variant="h6" color="primary" gutterBottom>
                 Documentos e Biometria
               </Typography>
               <Divider sx={{ mb: 2 }} />
-            </Grid>
+            </div>
 
-            <Grid item xs={12} md={4}>
+            <div className="col-12 col-md-4">
               <Card variant="outlined" sx={{ height: '100%' }}>
                 <CardContent sx={{ textAlign: 'center' }}>
                   <Typography variant="subtitle2" color="textSecondary" gutterBottom>
@@ -610,7 +622,7 @@ export default function Professionals() {
                   ) : (
                     <Box sx={{ my: 4 }}>
                       <PhotoCamera sx={{ fontSize: 50, color: '#ccc' }} />
-                      <Typography variant="caption" display="block" color="textSecondary" sx={{ my: 1 }}>
+                      <Typography variant="caption" color="textSecondary" sx={{ display: 'block', my: 1 }}>
                         Nenhuma foto enviada
                       </Typography>
                     </Box>
@@ -629,9 +641,9 @@ export default function Professionals() {
                   </label>
                 </CardContent>
               </Card>
-            </Grid>
+            </div>
 
-            <Grid item xs={12} md={4}>
+            <div className="col-12 col-md-4">
               <Card variant="outlined" sx={{ height: '100%' }}>
                 <CardContent sx={{ textAlign: 'center' }}>
                   <Typography variant="subtitle2" color="textSecondary" gutterBottom>
@@ -651,7 +663,7 @@ export default function Professionals() {
                   ) : (
                     <Box sx={{ my: 4 }}>
                       <Fingerprint sx={{ fontSize: 50, color: '#ccc' }} />
-                      <Typography variant="caption" display="block" color="textSecondary" sx={{ my: 1 }}>
+                      <Typography variant="caption" color="textSecondary" sx={{ display: 'block', my: 1 }}>
                         Nenhuma digital enviada
                       </Typography>
                     </Box>
@@ -670,9 +682,9 @@ export default function Professionals() {
                   </label>
                 </CardContent>
               </Card>
-            </Grid>
+            </div>
 
-            <Grid item xs={12} md={4}>
+            <div className="col-12 col-md-4">
               <Card variant="outlined" sx={{ height: '100%' }}>
                 <CardContent sx={{ textAlign: 'center' }}>
                   <Typography variant="subtitle2" color="textSecondary" gutterBottom>
@@ -692,7 +704,7 @@ export default function Professionals() {
                   ) : (
                     <Box sx={{ my: 4 }}>
                       <Gesture sx={{ fontSize: 50, color: '#ccc' }} />
-                      <Typography variant="caption" display="block" color="textSecondary" sx={{ my: 1 }}>
+                      <Typography variant="caption" color="textSecondary" sx={{ display: 'block', my: 1 }}>
                         Nenhuma assinatura enviada
                       </Typography>
                     </Box>
@@ -711,34 +723,34 @@ export default function Professionals() {
                   </label>
                 </CardContent>
               </Card>
-            </Grid>
+            </div>
 
             {/* Section 3: Professions Selection */}
-            <Grid item xs={12} mt={2}>
+            <div className="col-12 mt-2">
               <Typography variant="h6" color="primary" gutterBottom>
                 Profissões do Profissional
               </Typography>
               <Divider sx={{ mb: 1 }} />
-              <Typography variant="caption" color="textSecondary" display="block" sx={{ mb: 2 }}>
+              <Typography variant="caption" color="textSecondary" sx={{ display: 'block', mb: 2 }}>
                 Selecione uma ou mais profissões vinculadas ao profissional
               </Typography>
-            </Grid>
+            </div>
 
-            <Grid item xs={12}>
+            <div className="col-12">
               <Paper variant="outlined" sx={{ p: 2 }}>
                 {professions.length === 0 ? (
                   <Typography variant="body2" color="textSecondary">
                     Nenhuma profissão ativa cadastrada no sistema. Cadastre profissões primeiro.
                   </Typography>
                 ) : (
-                  <Grid container spacing={2}>
+                  <div className="row g-2">
                     {professions.map((prof) => {
                       const isSelected = form.professions.includes(prof.id!);
                       const regNum = form.profession_registrations[prof.id!] || '';
 
                       return (
-                        <Grid item xs={12} md={6} key={prof.id}>
-                          <Stack direction="row" spacing={2} alignItems="center" justifyContent="space-between" sx={{ borderBottom: '1px solid #eee', pb: 1 }}>
+                        <div className="col-12 col-md-6" key={prof.id}>
+                          <Stack direction="row" spacing={2} sx={{ alignItems: 'center', justifyContent: 'space-between', borderBottom: '1px solid #eee', pb: 1 }}>
                             <FormControlLabel
                               control={
                                 <Checkbox
@@ -763,17 +775,17 @@ export default function Professionals() {
                               />
                             )}
                           </Stack>
-                        </Grid>
+                        </div>
                       );
                     })}
-                  </Grid>
+                  </div>
                 )}
               </Paper>
-            </Grid>
+            </div>
 
             {/* Section 4: Addresses */}
-            <Grid item xs={12} mt={2}>
-              <Box display="flex" justifyContent="space-between" alignItems="center">
+            <div className="col-12 mt-2">
+              <Box sx={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center' }}>
                 <Typography variant="h6" color="primary">
                   Endereços
                 </Typography>
@@ -788,13 +800,13 @@ export default function Professionals() {
                 </Button>
               </Box>
               <Divider sx={{ mb: 2, mt: 1 }} />
-            </Grid>
+            </div>
 
             {form.addresses.map((addr, index) => (
-              <Grid item xs={12} key={index}>
+              <div className="col-12" key={index}>
                 <Card variant="outlined" sx={{ backgroundColor: addr.correspondence ? '#f7faff' : '#fff' }}>
                   <CardContent>
-                    <Box display="flex" justifyContent="space-between" alignItems="center" mb={2}>
+                    <Box sx={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', mb: 2 }}>
                       <Typography variant="subtitle2" color="textSecondary">
                         Endereço #{index + 1} {addr.correspondence && <span className="badge bg-primary">Correspondência</span>}
                       </Typography>
@@ -809,8 +821,8 @@ export default function Professionals() {
                       )}
                     </Box>
 
-                    <Grid container spacing={2}>
-                      <Grid item xs={12} md={3}>
+                    <div className="row g-2">
+                      <div className="col-12 col-md-3">
                         <TextField
                           select
                           label="Tipo"
@@ -823,8 +835,8 @@ export default function Professionals() {
                           <MenuItem value="profissional">Profissional</MenuItem>
                           <MenuItem value="outro">Outro</MenuItem>
                         </TextField>
-                      </Grid>
-                      <Grid item xs={12} md={3}>
+                      </div>
+                      <div className="col-12 col-md-3">
                         <TextField
                           label="CEP"
                           value={addr.cep}
@@ -832,8 +844,8 @@ export default function Professionals() {
                           fullWidth
                           size="small"
                         />
-                      </Grid>
-                      <Grid item xs={12} md={4}>
+                      </div>
+                      <div className="col-12 col-md-4">
                         <TextField
                           label="Logradouro"
                           value={addr.street}
@@ -841,8 +853,8 @@ export default function Professionals() {
                           fullWidth
                           size="small"
                         />
-                      </Grid>
-                      <Grid item xs={12} md={2}>
+                      </div>
+                      <div className="col-12 col-md-2">
                         <TextField
                           label="Número"
                           value={addr.number}
@@ -850,9 +862,9 @@ export default function Professionals() {
                           fullWidth
                           size="small"
                         />
-                      </Grid>
+                      </div>
 
-                      <Grid item xs={12} md={4}>
+                      <div className="col-12 col-md-4">
                         <TextField
                           label="Complemento"
                           value={addr.complement || ''}
@@ -860,8 +872,8 @@ export default function Professionals() {
                           fullWidth
                           size="small"
                         />
-                      </Grid>
-                      <Grid item xs={12} md={3}>
+                      </div>
+                      <div className="col-12 col-md-3">
                         <TextField
                           label="Bairro"
                           value={addr.neighborhood}
@@ -869,8 +881,8 @@ export default function Professionals() {
                           fullWidth
                           size="small"
                         />
-                      </Grid>
-                      <Grid item xs={12} md={3}>
+                      </div>
+                      <div className="col-12 col-md-3">
                         <TextField
                           label="Cidade"
                           value={addr.city}
@@ -878,8 +890,8 @@ export default function Professionals() {
                           fullWidth
                           size="small"
                         />
-                      </Grid>
-                      <Grid item xs={12} md={2}>
+                      </div>
+                      <div className="col-12 col-md-2">
                         <TextField
                           label="Estado"
                           value={addr.state}
@@ -887,9 +899,9 @@ export default function Professionals() {
                           fullWidth
                           size="small"
                         />
-                      </Grid>
+                      </div>
 
-                      <Grid item xs={12}>
+                      <div className="col-12">
                         <Stack direction="row" spacing={3}>
                           <FormControlLabel
                             control={
@@ -912,13 +924,13 @@ export default function Professionals() {
                             label="Endereço Ativo"
                           />
                         </Stack>
-                      </Grid>
-                    </Grid>
+                      </div>
+                    </div>
                   </CardContent>
                 </Card>
-              </Grid>
+              </div>
             ))}
-          </Grid>
+          </div>
         </DialogContent>
         <DialogActions sx={{ p: 3 }}>
           <Button onClick={() => setOpenDialog(false)} color="inherit">

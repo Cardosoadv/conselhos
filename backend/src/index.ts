@@ -6,6 +6,7 @@ import settingsRoutes from './routes/settingsRoutes';
 import professionRoutes from './routes/professionRoutes';
 import professionalRoutes from './routes/professionalRoutes';
 import companyRoutes from './routes/companyRoutes';
+import processRoutes from './routes/processRoutes';
 import { initDB } from './config/db';
 
 dotenv.config();
@@ -22,6 +23,7 @@ app.use('/api/settings', settingsRoutes);
 app.use('/api/professions', professionRoutes);
 app.use('/api/professionals', professionalRoutes);
 app.use('/api/companies', companyRoutes);
+app.use('/api/processes', processRoutes);
 
 // Rota de teste
 app.get('/', (req: Request, res: Response) => {

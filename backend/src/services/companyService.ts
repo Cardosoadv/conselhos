@@ -1,4 +1,6 @@
 import { Company, getAllCompanies, getCompanyById, createCompany, updateCompany, deleteCompany, checkCnpjExists } from '../model/companyModel';
+import * as processModel from '../model/processModel';
+import { generateCompanyFichaHTML } from '../utils/documentGenerator';
 import { validateCNPJ } from '../utils/cnpjValidator';
 
 export const fetchAllCompanies = async (): Promise<Company[]> => {
@@ -46,6 +48,27 @@ export const addCompany = async (data: Company): Promise<Company> => {
   if (!created) {
     throw new Error('Erro ao buscar empresa cadastrada');
   }
+
+  try {
+    // Create automatic process for company
+    const processId = await processModel.createProcess({
+      company_id: insertId,
+      type: 'Empresa'
+    });
+
+    // Generate automatic document Ficha de Cadastro
+    const fichaHtml = await generateCompanyFichaHTML(created);
+    await processModel.createDocument({
+      process_id: processId,
+      title: 'Ficha de Cadastro da Empresa',
+      type: 'html',
+      content: fichaHtml
+    });
+  } catch (err) {
+    console.error('Erro ao gerar processo automático para empresa:', err);
+    // Do not crash the return of company creation
+  }
+
   return created;
 };
 

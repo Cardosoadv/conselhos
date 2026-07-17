@@ -1,5 +1,7 @@
 import { Request, Response } from 'express';
 import * as profModel from '../model/professionalModel';
+import * as processModel from '../model/processModel';
+import { generateProfessionalFichaHTML } from '../utils/documentGenerator';
 import { validateCPF } from '../utils/cpfValidator';
 
 export const getNextRegNumber = async (req: Request, res: Response) => {
@@ -85,6 +87,29 @@ export const create = async (req: Request, res: Response) => {
 
     const insertedId = await profModel.createProfessional(data);
     const createdProf = await profModel.getProfessionalById(insertedId);
+
+    if (createdProf) {
+      try {
+        // Create automatic process
+        const processId = await processModel.createProcess({
+          professional_id: insertedId,
+          type: 'Profissional'
+        });
+
+        // Generate automatic document Ficha de Cadastro
+        const fichaHtml = await generateProfessionalFichaHTML(createdProf);
+        await processModel.createDocument({
+          process_id: processId,
+          title: 'Ficha de Cadastro do Profissional',
+          type: 'html',
+          content: fichaHtml
+        });
+      } catch (err) {
+        console.error('Erro ao gerar processo automático para profissional:', err);
+        // We do not fail the request if process generation fails, but log it
+      }
+    }
+
     return res.status(201).json(createdProf);
   } catch (error: any) {
     console.error('Error creating professional:', error);

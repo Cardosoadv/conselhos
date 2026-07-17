@@ -8,6 +8,7 @@ import Settings from './pages/Settings';
 import Professions from './pages/Professions';
 import Professionals from './pages/Professionals';
 import Companies from './pages/Companies';
+import Processos from './pages/Processos';
 
 function Layout({ children }: { children: React.ReactNode }) {
   const { user, logout } = useContext(AuthContext);
@@ -132,19 +133,6 @@ function Dashboard() {
             </div>
           </div>
         </div>
-      </div>
-    </div>
-  );
-}
-
-function Processos() {
-  return (
-    <div>
-      <div className="page-header">
-        <h1>Processos</h1>
-      </div>
-      <div className="card">
-        <div className="card-body">Lista de Processos...</div>
       </div>
     </div>
   );
