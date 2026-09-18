@@ -25,6 +25,9 @@ export interface Company {
   neighborhood?: string | null;
   city?: string | null;
   state?: string | null;
+  registration_number?: number | null;
+  data_aprovacao?: string | null;
+  numero_reuniao?: string | null;
   created_at?: string;
   updated_at?: string;
   professionals?: CompanyProfessional[];

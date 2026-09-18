@@ -22,6 +22,8 @@ export interface Professional {
   phone?: string;
   birth_date?: string;
   registration_number?: number | null;
+  data_aprovacao?: string | null;
+  numero_reuniao?: string | null;
   foto?: string | null;
   digital?: string | null;
   assinatura?: string | null;

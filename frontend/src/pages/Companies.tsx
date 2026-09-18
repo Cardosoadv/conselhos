@@ -113,6 +113,9 @@ export default function Companies() {
         neighborhood: company.neighborhood || '',
         city: company.city || '',
         state: company.state || '',
+        registration_number: company.registration_number || null,
+        data_aprovacao: company.data_aprovacao || '',
+        numero_reuniao: company.numero_reuniao || '',
         professionals: company.professionals || []
       });
     } else {
@@ -130,6 +133,9 @@ export default function Companies() {
         neighborhood: '',
         city: '',
         state: '',
+        registration_number: null,
+        data_aprovacao: '',
+        numero_reuniao: '',
         professionals: []
       });
     }
@@ -362,6 +368,15 @@ export default function Companies() {
               <TextField label="Bairro" name="neighborhood" value={formData.neighborhood || ''} onChange={handleInputChange} fullWidth />
               <TextField label="Cidade" name="city" value={formData.city || ''} onChange={handleInputChange} fullWidth />
               <TextField label="UF" name="state" value={formData.state || ''} onChange={handleInputChange} fullWidth />
+            </Box>
+
+            <Divider />
+
+            <Typography variant="h6" color="primary" sx={{ mb: -1 }}>Aprovação de Registro</Typography>
+            <Box sx={{ display: 'grid', gridTemplateColumns: { xs: '1fr', md: '1fr 1fr 1fr' }, gap: 2 }}>
+              <TextField label="Data de Aprovação" name="data_aprovacao" type="date" value={formData.data_aprovacao ? (typeof formData.data_aprovacao === 'string' ? formData.data_aprovacao.substring(0, 10) : '') : ''} onChange={handleInputChange} InputLabelProps={{ shrink: true }} fullWidth />
+              <TextField label="Número da Reunião" name="numero_reuniao" value={formData.numero_reuniao || ''} onChange={handleInputChange} fullWidth />
+              <TextField label="Número de Registro" name="registration_number" type="number" value={formData.registration_number || ''} onChange={handleInputChange} fullWidth />
             </Box>
 
             <Divider />
