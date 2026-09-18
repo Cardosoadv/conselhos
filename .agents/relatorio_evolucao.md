@@ -1,8 +1,11 @@
 # Relatório de Evolução do Projeto Conselhos
 
-**Versão atual:** 1.3.4
+**Versão atual:** 1.3.5
 
 ## Histórico de Versões
+
+### v1.3.5 - 18/09/2026
+- **Automação & Scripts:** Adicionado comando `migrate` no `package.json` da raiz do projeto (`npm --prefix backend run migrate`) para permitir a execução de migrations do banco de dados diretamente a partir do diretório raiz.
 
 ### v1.3.4 - 18/09/2026
 - **Backend & Banco de Dados:** Adicionados novos campos (`area`, `data_aprovacao`, `numero_reuniao`, `fundamento_legal`) à tabela `company_professionals` via migration `0009`. Ajustado o modelo `companyModel.ts` para persistir e buscar estes dados.
