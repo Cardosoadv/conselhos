@@ -11,6 +11,33 @@ const formatDate = (dateStr?: string | Date) => {
   return d.toLocaleDateString('pt-BR');
 };
 
+// Helper to format date and time DD/MM/YYYY às HH:MM:SS
+const formatDateTime = (dateVal: string | Date = new Date()) => {
+  const d = new Date(dateVal);
+  if (isNaN(d.getTime())) return '-';
+  return `${formatDate(d)} às ${d.toLocaleTimeString('pt-BR')}`;
+};
+
+// Helper to generate the electronic validation footer HTML
+const generateDocumentFooterHTML = (generatedAt: Date = new Date()) => {
+  return `
+      <!-- RODAPÉ DE VALIDAÇÃO ELETRÔNICA -->
+      <div style="margin-top: 50px; border-top: 2px solid #ccc; padding-top: 15px; font-size: 0.8rem; color: #666; text-align: left;">
+        <table style="width: 100%; border-collapse: collapse;">
+          <tr>
+            <td style="vertical-align: top; width: 10%;">
+              <div style="font-size: 2.2rem; color: #1c5230;">📄</div>
+            </td>
+            <td style="vertical-align: top; padding-left: 10px;">
+              <span style="font-weight: bold; color: #333;">Documento Gerado Eletronicamente</span><br/>
+              Este documento foi produzido e certificado eletronicamente pelo módulo de protocolo do Sistema de Gestão de Conselhos em <strong>${formatDateTime(generatedAt)}</strong>.<br/>
+              A autenticidade deste documento pode ser confirmada em nossos portais oficiais de processos eletrônicos.
+            </td>
+          </tr>
+        </table>
+      </div>`;
+};
+
 export const generateProfessionalFichaHTML = async (prof: Professional): Promise<string> => {
   // Fetch profession names if we have profession IDs
   let professionsStr = '-';
@@ -141,21 +168,7 @@ export const generateProfessionalFichaHTML = async (prof: Professional): Promise
         </div>
       </div>
 
-      <!-- RODAPÉ DE VALIDAÇÃO ELETRÔNICA -->
-      <div style="margin-top: 50px; border-top: 2px solid #ccc; padding-top: 15px; font-size: 0.8rem; color: #666; text-align: left;">
-        <table style="width: 100%; border-collapse: collapse;">
-          <tr>
-            <td style="vertical-align: top; width: 10%;">
-              <div style="font-size: 2.2rem; color: #1c5230;">📄</div>
-            </td>
-            <td style="vertical-align: top; padding-left: 10px;">
-              <span style="font-weight: bold; color: #333;">Documento Gerado Eletronicamente</span><br/>
-              Este documento foi produzido e certificado eletronicamente pelo módulo de protocolo do Sistema de Gestão de Conselhos em <strong>${formatDate(new Date())} às ${new Date().toLocaleTimeString('pt-BR')}</strong>.<br/>
-              A autenticidade deste documento pode ser confirmada em nossos portais oficiais de processos eletrônicos.
-            </td>
-          </tr>
-        </table>
-      </div>
+      ${generateDocumentFooterHTML()}
     </div>
   `;
 };
@@ -262,21 +275,7 @@ export const generateCompanyFichaHTML = async (comp: Company): Promise<string> =
         </div>
       </div>
 
-      <!-- RODAPÉ DE VALIDAÇÃO ELETRÔNICA -->
-      <div style="margin-top: 50px; border-top: 2px solid #ccc; padding-top: 15px; font-size: 0.8rem; color: #666; text-align: left;">
-        <table style="width: 100%; border-collapse: collapse;">
-          <tr>
-            <td style="vertical-align: top; width: 10%;">
-              <div style="font-size: 2.2rem; color: #1c5230;">📄</div>
-            </td>
-            <td style="vertical-align: top; padding-left: 10px;">
-              <span style="font-weight: bold; color: #333;">Documento Gerado Eletronicamente</span><br/>
-              Este documento foi produzido e certificado eletronicamente pelo módulo de protocolo do Sistema de Gestão de Conselhos em <strong>${formatDate(new Date())} às ${new Date().toLocaleTimeString('pt-BR')}</strong>.<br/>
-              A autenticidade deste documento pode ser confirmada em nossos portais oficiais de processos eletrônicos.
-            </td>
-          </tr>
-        </table>
-      </div>
+      ${generateDocumentFooterHTML()}
     </div>
   `;
 };
