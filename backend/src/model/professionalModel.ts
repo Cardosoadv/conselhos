@@ -25,6 +25,8 @@ export interface Professional {
   phone?: string;
   birth_date?: string;
   registration_number?: number | null;
+  data_aprovacao?: string | Date | null;
+  numero_reuniao?: string | null;
   foto?: string | null;
   digital?: string | null;
   assinatura?: string | null;
@@ -152,12 +154,12 @@ export const createProfessional = async (profData: Professional): Promise<number
   try {
     await connection.beginTransaction();
 
-    const { name, cpf, email, phone, birth_date, registration_number, foto, digital, assinatura, addresses, professions, profession_registrations } = profData;
+    const { name, cpf, email, phone, birth_date, registration_number, data_aprovacao, numero_reuniao, foto, digital, assinatura, addresses, professions, profession_registrations } = profData;
 
     // 1. Insert Professional basic info
     const profQuery = `
-      INSERT INTO professionals (name, cpf, email, phone, birth_date, registration_number, foto, digital, assinatura)
-      VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?)
+      INSERT INTO professionals (name, cpf, email, phone, birth_date, registration_number, data_aprovacao, numero_reuniao, foto, digital, assinatura)
+      VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)
     `;
     const profValues = [
       name,
@@ -166,6 +168,8 @@ export const createProfessional = async (profData: Professional): Promise<number
       phone || null,
       birth_date || null,
       registration_number || null,
+      data_aprovacao || null,
+      numero_reuniao || null,
       foto || null,
       digital || null,
       assinatura || null
@@ -238,6 +242,8 @@ export const updateProfessional = async (id: number, profData: Partial<Professio
     if (profData.phone !== undefined) { fields.push('phone = ?'); values.push(profData.phone); }
     if (profData.birth_date !== undefined) { fields.push('birth_date = ?'); values.push(profData.birth_date); }
     if (profData.registration_number !== undefined) { fields.push('registration_number = ?'); values.push(profData.registration_number); }
+    if (profData.data_aprovacao !== undefined) { fields.push('data_aprovacao = ?'); values.push(profData.data_aprovacao); }
+    if (profData.numero_reuniao !== undefined) { fields.push('numero_reuniao = ?'); values.push(profData.numero_reuniao); }
     if (profData.foto !== undefined) { fields.push('foto = ?'); values.push(profData.foto); }
     if (profData.digital !== undefined) { fields.push('digital = ?'); values.push(profData.digital); }
     if (profData.assinatura !== undefined) { fields.push('assinatura = ?'); values.push(profData.assinatura); }

@@ -1,8 +1,17 @@
 # Relatório de Evolução do Projeto Conselhos
 
-**Versão atual:** 1.3.5
+**Versão atual:** 1.5.0
 
 ## Histórico de Versões
+
+### v1.5.0 - 18/09/2026
+- **Feature ART:** Adicionada a funcionalidade de geração de Anotação de Responsabilidade Técnica (ART) vinculada ao processo de inscrição do profissional.
+- **Backend & Banco de Dados:** Criada migration `0011_art_process.ts` adicionando `parent_process_id` à tabela `processes` para suportar subprocessos. Modificada a listagem de tipos de processo e adicionada lógica para gerar a ART como um subprocesso e seu respectivo documento HTML.
+- **Frontend:** Atualização na tela de Empresas (`Companies.tsx`) com a adição de um botão "Gerar ART" na listagem de profissionais do tipo "Responsável Técnico".
+
+### v1.4.0 - 18/09/2026
+- **Backend & Banco de Dados:** Criada migration `0010_approval_fields.ts` para adicionar campos `data_aprovacao` e `numero_reuniao` nas tabelas `professionals` e `companies`, além de `registration_number` para `companies`. Atualizados os models e controllers correspondentes.
+- **Frontend:** Adicionados os campos de "Aprovação de Registro" nos formulários de cadastro de Profissionais e Empresas (`Professionals.tsx` e `Companies.tsx`), incluindo interfaces dos services correspondentes.
 
 ### v1.3.5 - 18/09/2026
 - **Automação & Scripts:** Adicionado comando `migrate` no `package.json` da raiz do projeto (`npm --prefix backend run migrate`) para permitir a execução de migrations do banco de dados diretamente a partir do diretório raiz.

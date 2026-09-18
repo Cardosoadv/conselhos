@@ -10,6 +10,7 @@ import { getCompanies, createCompany, updateCompany, deleteCompany, type Company
 import { getProfessionals, type Professional } from '../services/professionalService';
 import { getSettings } from '../services/settingsService';
 import { validateCNPJ } from '../utils/cnpjValidator';
+import { createArt } from '../services/processService';
 
 export default function Companies() {
   const navigate = useNavigate();
@@ -113,6 +114,9 @@ export default function Companies() {
         neighborhood: company.neighborhood || '',
         city: company.city || '',
         state: company.state || '',
+        registration_number: company.registration_number || null,
+        data_aprovacao: company.data_aprovacao || '',
+        numero_reuniao: company.numero_reuniao || '',
         professionals: company.professionals || []
       });
     } else {
@@ -130,6 +134,9 @@ export default function Companies() {
         neighborhood: '',
         city: '',
         state: '',
+        registration_number: null,
+        data_aprovacao: '',
+        numero_reuniao: '',
         professionals: []
       });
     }
@@ -195,6 +202,24 @@ export default function Companies() {
       ...formData,
       professionals: (formData.professionals || []).filter((p: CompanyProfessional) => p.professional_id !== profId)
     });
+  };
+
+  const handleCreateArt = async (profId: number) => {
+    if (!editingId) {
+      showSnackbar('Salve a empresa primeiro para gerar ART', 'error');
+      return;
+    }
+    try {
+      setLoading(true);
+      await createArt(profId, editingId);
+      showSnackbar('ART gerada com sucesso e vinculada ao processo do profissional!', 'success');
+    } catch (error: any) {
+      console.error(error);
+      const msg = error.response?.data?.error || 'Erro ao gerar ART';
+      showSnackbar(msg, 'error');
+    } finally {
+      setLoading(false);
+    }
   };
 
   const handleSave = async () => {
@@ -366,6 +391,15 @@ export default function Companies() {
 
             <Divider />
 
+            <Typography variant="h6" color="primary" sx={{ mb: -1 }}>Aprovação de Registro</Typography>
+            <Box sx={{ display: 'grid', gridTemplateColumns: { xs: '1fr', md: '1fr 1fr 1fr' }, gap: 2 }}>
+              <TextField label="Data de Aprovação" name="data_aprovacao" type="date" value={formData.data_aprovacao ? (typeof formData.data_aprovacao === 'string' ? formData.data_aprovacao.substring(0, 10) : '') : ''} onChange={handleInputChange} InputLabelProps={{ shrink: true }} fullWidth />
+              <TextField label="Número da Reunião" name="numero_reuniao" value={formData.numero_reuniao || ''} onChange={handleInputChange} fullWidth />
+              <TextField label="Número de Registro" name="registration_number" type="number" value={formData.registration_number || ''} onChange={handleInputChange} fullWidth />
+            </Box>
+
+            <Divider />
+
             <Typography variant="h6" color="primary" sx={{ mb: -1 }}>Profissionais Vinculados *</Typography>
 
             <Box sx={{ display: 'flex', gap: 2, alignItems: 'center', flexWrap: { xs: 'wrap', md: 'nowrap' } }}>
@@ -446,6 +480,18 @@ export default function Companies() {
                         }
                       />
                       <ListItemSecondaryAction>
+                        {prof.vinculo_type.toLowerCase().includes('responsável técnico') && editingId && (
+                          <Button 
+                            variant="outlined" 
+                            color="primary" 
+                            size="small" 
+                            onClick={() => handleCreateArt(prof.professional_id)}
+                            sx={{ mr: 2 }}
+                            disabled={loading}
+                          >
+                            Gerar ART
+                          </Button>
+                        )}
                         <IconButton edge="end" aria-label="delete" onClick={() => handleRemoveProfessional(prof.professional_id)}>
                           <DeleteIcon color="error" />
                         </IconButton>

@@ -26,6 +26,9 @@ export interface Company {
   neighborhood?: string | null;
   city?: string | null;
   state?: string | null;
+  registration_number?: number | null;
+  data_aprovacao?: string | Date | null;
+  numero_reuniao?: string | null;
   created_at?: Date;
   updated_at?: Date;
 
@@ -101,14 +104,18 @@ export const createCompany = async (companyData: Company): Promise<number> => {
       neighborhood,
       city,
       state,
+      registration_number,
+      data_aprovacao,
+      numero_reuniao,
       professionals
     } = companyData;
 
     const query = `
       INSERT INTO companies (
         razao_social, nome_fantasia, cnpj, email, phone,
-        cep, street, number, complement, neighborhood, city, state
-      ) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)
+        cep, street, number, complement, neighborhood, city, state,
+        registration_number, data_aprovacao, numero_reuniao
+      ) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)
     `;
     const values = [
       razao_social,
@@ -122,7 +129,10 @@ export const createCompany = async (companyData: Company): Promise<number> => {
       complement || null,
       neighborhood || null,
       city || null,
-      state || null
+      state || null,
+      registration_number || null,
+      data_aprovacao || null,
+      numero_reuniao || null
     ];
 
     const [result] = await connection.query<ResultSetHeader>(query, values);
@@ -176,6 +186,9 @@ export const updateCompany = async (id: number, companyData: Partial<Company>): 
     if (companyData.neighborhood !== undefined) { fields.push('neighborhood = ?'); values.push(companyData.neighborhood); }
     if (companyData.city !== undefined) { fields.push('city = ?'); values.push(companyData.city); }
     if (companyData.state !== undefined) { fields.push('state = ?'); values.push(companyData.state); }
+    if (companyData.registration_number !== undefined) { fields.push('registration_number = ?'); values.push(companyData.registration_number); }
+    if (companyData.data_aprovacao !== undefined) { fields.push('data_aprovacao = ?'); values.push(companyData.data_aprovacao); }
+    if (companyData.numero_reuniao !== undefined) { fields.push('numero_reuniao = ?'); values.push(companyData.numero_reuniao); }
 
     if (fields.length > 0) {
       values.push(id);

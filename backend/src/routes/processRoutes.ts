@@ -12,5 +12,6 @@ router.get('/by-professional/:professionalId', processController.getByProfession
 router.get('/by-company/:companyId', processController.getByCompany);
 router.post('/:id/documents', processController.addDocument);
 router.post('/documents/:docId/sign', processController.signDoc);
+router.post('/art', processController.createArt);
 
 export default router;

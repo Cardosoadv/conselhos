@@ -6,8 +6,9 @@ export interface Process {
   process_number: string;
   professional_id?: number | null;
   company_id?: number | null;
-  type: 'Profissional' | 'Empresa';
+  type: 'Profissional' | 'Empresa' | 'ART';
   status?: string;
+  parent_process_id?: number | null;
   created_at?: Date;
   updated_at?: Date;
 
@@ -52,18 +53,19 @@ export const generateNextProcessNumber = async (): Promise<string> => {
 // Create a new process
 export const createProcess = async (processData: Partial<Process>): Promise<number> => {
   const processNumber = processData.process_number || await generateNextProcessNumber();
-  const { professional_id, company_id, type, status = 'Aberto' } = processData;
+  const { professional_id, company_id, type, status = 'Aberto', parent_process_id = null } = processData;
 
   const query = `
-    INSERT INTO processes (process_number, professional_id, company_id, type, status)
-    VALUES (?, ?, ?, ?, ?)
+    INSERT INTO processes (process_number, professional_id, company_id, type, status, parent_process_id)
+    VALUES (?, ?, ?, ?, ?, ?)
   `;
   const [result] = await pool.query<ResultSetHeader>(query, [
     processNumber,
     professional_id || null,
     company_id || null,
     type,
-    status
+    status,
+    parent_process_id
   ]);
 
   return result.insertId;

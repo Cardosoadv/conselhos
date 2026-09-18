@@ -107,6 +107,8 @@ const initialForm = (): Professional => ({
   foto: null,
   digital: null,
   assinatura: null,
+  data_aprovacao: '',
+  numero_reuniao: '',
   addresses: [
     { ...initialAddress(), correspondence: true } // At least one with correspondence by default
   ],
@@ -595,6 +597,34 @@ export default function Professionals() {
             )}
 
             {/* Section 2: Biometrics */}
+            <div className="col-12 mt-2">
+              <Typography variant="h6" color="primary" gutterBottom>
+                Aprovação de Registro
+              </Typography>
+              <Divider sx={{ mb: 2 }} />
+            </div>
+
+            <div className="col-12 col-md-6">
+              <TextField
+                label="Data de Aprovação"
+                name="data_aprovacao"
+                type="date"
+                value={form.data_aprovacao ? (typeof form.data_aprovacao === 'string' ? form.data_aprovacao.substring(0, 10) : '') : ''}
+                onChange={handleInputChange}
+                fullWidth
+                slotProps={{ inputLabel: { shrink: true } }}
+              />
+            </div>
+            <div className="col-12 col-md-6">
+              <TextField
+                label="Número da Reunião"
+                name="numero_reuniao"
+                value={form.numero_reuniao || ''}
+                onChange={handleInputChange}
+                fullWidth
+              />
+            </div>
+
             <div className="col-12 mt-2">
               <Typography variant="h6" color="primary" gutterBottom>
                 Documentos e Biometria
