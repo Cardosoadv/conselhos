@@ -17,7 +17,7 @@ export interface Process {
   process_number: string;
   professional_id?: number | null;
   company_id?: number | null;
-  type: 'Profissional' | 'Empresa';
+  type: 'Profissional' | 'Empresa' | 'ART';
   status: string;
   created_at: string;
   updated_at: string;
@@ -65,6 +65,14 @@ export const addDocumentToProcess = async (
 export const signDocument = async (docId: number, signedBy: string): Promise<ProcessDocument> => {
   const response = await api.post(`/processes/documents/${docId}/sign`, {
     signedBy
+  });
+  return response.data;
+};
+
+export const createArt = async (professionalId: number, companyId: number): Promise<{ process: Process, docId: number }> => {
+  const response = await api.post('/processes/art', {
+    professionalId,
+    companyId
   });
   return response.data;
 };

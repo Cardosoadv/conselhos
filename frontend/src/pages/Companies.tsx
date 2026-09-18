@@ -10,6 +10,7 @@ import { getCompanies, createCompany, updateCompany, deleteCompany, type Company
 import { getProfessionals, type Professional } from '../services/professionalService';
 import { getSettings } from '../services/settingsService';
 import { validateCNPJ } from '../utils/cnpjValidator';
+import { createArt } from '../services/processService';
 
 export default function Companies() {
   const navigate = useNavigate();
@@ -201,6 +202,24 @@ export default function Companies() {
       ...formData,
       professionals: (formData.professionals || []).filter((p: CompanyProfessional) => p.professional_id !== profId)
     });
+  };
+
+  const handleCreateArt = async (profId: number) => {
+    if (!editingId) {
+      showSnackbar('Salve a empresa primeiro para gerar ART', 'error');
+      return;
+    }
+    try {
+      setLoading(true);
+      await createArt(profId, editingId);
+      showSnackbar('ART gerada com sucesso e vinculada ao processo do profissional!', 'success');
+    } catch (error: any) {
+      console.error(error);
+      const msg = error.response?.data?.error || 'Erro ao gerar ART';
+      showSnackbar(msg, 'error');
+    } finally {
+      setLoading(false);
+    }
   };
 
   const handleSave = async () => {
@@ -461,6 +480,18 @@ export default function Companies() {
                         }
                       />
                       <ListItemSecondaryAction>
+                        {prof.vinculo_type.toLowerCase().includes('responsável técnico') && editingId && (
+                          <Button 
+                            variant="outlined" 
+                            color="primary" 
+                            size="small" 
+                            onClick={() => handleCreateArt(prof.professional_id)}
+                            sx={{ mr: 2 }}
+                            disabled={loading}
+                          >
+                            Gerar ART
+                          </Button>
+                        )}
                         <IconButton edge="end" aria-label="delete" onClick={() => handleRemoveProfessional(prof.professional_id)}>
                           <DeleteIcon color="error" />
                         </IconButton>

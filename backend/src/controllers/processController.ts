@@ -140,3 +140,76 @@ export const signDoc = async (req: Request, res: Response) => {
     return res.status(500).json({ error: error.message || 'Erro ao assinar documento' });
   }
 };
+
+export const createArt = async (req: Request, res: Response) => {
+  try {
+    const { professionalId, companyId } = req.body;
+    if (!professionalId || !companyId) {
+      return res.status(400).json({ error: 'IDs do profissional e da empresa são obrigatórios' });
+    }
+
+    const { getProfessionalById } = await import('../model/professionalModel');
+    const { getCompanyById } = await import('../model/companyModel');
+
+    const prof = await getProfessionalById(professionalId);
+    if (!prof) {
+      return res.status(404).json({ error: 'Profissional não encontrado' });
+    }
+
+    // "apenas profissional registrado pode fazer art"
+    const hasRegistration = prof.registration_number || (prof.profession_registrations && Object.values(prof.profession_registrations).some(v => v !== null));
+    if (!hasRegistration) {
+      return res.status(403).json({ error: 'Apenas profissionais registrados podem gerar ART' });
+    }
+
+    const comp = await getCompanyById(companyId);
+    if (!comp) {
+      return res.status(404).json({ error: 'Empresa não encontrada' });
+    }
+
+    // Get the professional's inscription process
+    const profProcess = await processModel.getProcessByProfessionalId(professionalId);
+    if (!profProcess) {
+      return res.status(404).json({ error: 'Processo de inscrição do profissional não encontrado' });
+    }
+
+    // Create the ART Process
+    const artProcessId = await processModel.createProcess({
+      professional_id: professionalId,
+      company_id: companyId,
+      type: 'ART',
+      status: 'Aberto',
+      parent_process_id: profProcess.id
+    });
+
+    // Generate the ART Document
+    const artHtml = `
+      <div style="font-family: Arial, sans-serif; line-height: 1.6;">
+        <h2 style="text-align: center;">Anotação de Responsabilidade Técnica (ART)</h2>
+        <p><strong>Contratante (Empresa):</strong> ${comp.razao_social}</p>
+        <p><strong>CNPJ:</strong> ${comp.cnpj}</p>
+        <hr />
+        <p><strong>Responsável Técnico (Profissional):</strong> ${prof.name}</p>
+        <p><strong>CPF:</strong> ${prof.cpf}</p>
+        <p><strong>Registro:</strong> ${prof.registration_number || 'Vinculado às profissões'}</p>
+        <hr />
+        <p>Declaramos para os devidos fins que o profissional acima assume a responsabilidade técnica sobre as atividades da empresa supracitada perante este Conselho.</p>
+        <br/><br/>
+        <p style="text-align: center;">________________________________________________<br/>Assinatura do Profissional</p>
+      </div>
+    `;
+
+    const docId = await processModel.createDocument({
+      process_id: artProcessId,
+      title: 'Anotação de Responsabilidade Técnica',
+      type: 'html',
+      content: artHtml
+    });
+
+    const newProcess = await processModel.getProcessById(artProcessId);
+    return res.status(201).json({ process: newProcess, docId });
+
+  } catch (error: any) {
+    return res.status(500).json({ error: error.message || 'Erro ao gerar ART' });
+  }
+};
