@@ -1,8 +1,12 @@
 # Relatório de Evolução do Projeto Conselhos
 
-**Versão atual:** 1.3.3
+**Versão atual:** 1.3.4
 
 ## Histórico de Versões
+
+### v1.3.4 - 18/09/2026
+- **Backend & Banco de Dados:** Adicionados novos campos (`area`, `data_aprovacao`, `numero_reuniao`, `fundamento_legal`) à tabela `company_professionals` via migration `0009`. Ajustado o modelo `companyModel.ts` para persistir e buscar estes dados.
+- **Frontend:** Atualizada a interface de `Companies.tsx` para apresentar formulário estendido quando o vínculo for de "Responsável Técnico" e exibir estas informações na tabela e nos documentos da ficha de cadastro.
 
 ### v1.3.3 - 17/07/2026
 - **Backend:** Aumento do limite de payload do `express.json` e `express.urlencoded` para `10mb` no `index.ts` para corrigir o erro 413 (Payload Too Large) no envio de arquivos/documentos.
