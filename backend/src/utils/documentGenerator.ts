@@ -165,9 +165,14 @@ export const generateCompanyFichaHTML = async (comp: Company): Promise<string> =
   const proflsHtml = comp.professionals && comp.professionals.length > 0
     ? comp.professionals.map((p, idx) => `
         <tr style="background-color: ${idx % 2 === 0 ? '#ffffff' : '#f9f9f9'};">
-          <td style="padding: 8px; border: 1px solid #ddd;">${p.name}</td>
-          <td style="padding: 8px; border: 1px solid #ddd;">${p.cpf}</td>
-          <td style="padding: 8px; border: 1px solid #ddd; font-weight: bold; color: #1c5230;">${p.vinculo_type}</td>
+          <td style="padding: 8px; border: 1px solid #ddd;">
+            ${p.name}
+            ${p.area ? `<br/><small style="color: #666;">Área: ${p.area}</small>` : ''}
+            ${p.data_aprovacao ? `<br/><small style="color: #666;">Aprov: ${formatDate(p.data_aprovacao)} | Reunião: ${p.numero_reuniao || '-'}</small>` : ''}
+            ${p.fundamento_legal ? `<br/><small style="color: #666;">Fundamento Legal: ${p.fundamento_legal}</small>` : ''}
+          </td>
+          <td style="padding: 8px; border: 1px solid #ddd; vertical-align: top;">${p.cpf}</td>
+          <td style="padding: 8px; border: 1px solid #ddd; font-weight: bold; color: #1c5230; vertical-align: top;">${p.vinculo_type}</td>
         </tr>
       `).join('')
     : '<tr><td colspan="3" style="padding: 10px; text-align: center; color: red;">Nenhum profissional vinculado.</td></tr>';

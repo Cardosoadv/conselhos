@@ -1,0 +1,25 @@
+<IfModule mod_rewrite.c>
+    RewriteEngine On
+
+    # 1. Redireciona requisições de API para o backend Node.js (rodando na porta 3000)
+    # NOTA: Para isso funcionar no XAMPP, você precisa habilitar o proxy_module e proxy_http_module no httpd.conf
+    RewriteRule ^api/(.*)$ http://localhost:3000/api/$1 [P,L]
+    
+    # Bloqueia acesso direto à pasta do backend
+    RewriteRule ^backend/(.*)$ - [F,L]
+
+    # 2. Tratamento para arquivos estáticos do frontend
+    # Se não for uma rota da API e o arquivo não existir fisicamente na raiz,
+    # tenta buscar dentro de frontend/dist/
+    RewriteCond %{REQUEST_URI} !/api/
+    RewriteCond %{REQUEST_FILENAME} !-f
+    RewriteCond %{REQUEST_FILENAME} !-d
+    RewriteRule ^(.*)$ frontend/dist/$1 [L]
+
+    # 3. Tratamento para o SPA (Single Page Application - React/Vue/etc)
+    # Se o arquivo não existir em frontend/dist, redireciona para o index.html do frontend
+    RewriteCond %{REQUEST_URI} !/api/
+    RewriteCond %{REQUEST_FILENAME} !-f
+    RewriteCond %{REQUEST_FILENAME} !-d
+    RewriteRule ^(.*)$ frontend/dist/index.html [L]
+</IfModule>

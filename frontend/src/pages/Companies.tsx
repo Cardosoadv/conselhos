@@ -40,17 +40,21 @@ export default function Companies() {
   // Current professional assignment being configured in the form
   const [selectedProfId, setSelectedProfId] = useState<number | ''>('');
   const [selectedLinkType, setSelectedLinkType] = useState<string>('Responsável Técnico');
+  const [selectedArea, setSelectedArea] = useState<string>('');
+  const [selectedDataAprovacao, setSelectedDataAprovacao] = useState<string>('');
+  const [selectedNumeroReuniao, setSelectedNumeroReuniao] = useState<string>('');
+  const [selectedFundamentoLegal, setSelectedFundamentoLegal] = useState<string>('');
 
   // Error states
   const [cnpjError, setCnpjError] = useState('');
   const [professionalsError, setProfessionalsError] = useState('');
   const [snackbar, setSnackbar] = useState({ open: false, message: '', severity: 'success' as 'success' | 'error' });
 
-  useEffect(() => {
-    fetchData();
+  const showSnackbar = React.useCallback((message: string, severity: 'success' | 'error') => {
+    setSnackbar({ open: true, message, severity });
   }, []);
 
-  const fetchData = async () => {
+  const fetchData = React.useCallback(async () => {
     try {
       const [comps, profs, settingsData] = await Promise.all([
         getCompanies(),
@@ -74,7 +78,11 @@ export default function Companies() {
       console.error('Erro ao carregar dados:', error);
       showSnackbar('Erro ao carregar dados do sistema', 'error');
     }
-  };
+  }, [showSnackbar]);
+
+  useEffect(() => {
+    fetchData();
+  }, [fetchData]);
 
   const handleOpen = (company?: Company) => {
     setCnpjError('');
@@ -85,6 +93,10 @@ export default function Companies() {
     } else {
       setSelectedLinkType('Responsável Técnico');
     }
+    setSelectedArea('');
+    setSelectedDataAprovacao('');
+    setSelectedNumeroReuniao('');
+    setSelectedFundamentoLegal('');
 
     if (company) {
       setEditingId(company.id!);
@@ -153,11 +165,17 @@ export default function Companies() {
     const matchedProf = professionalsList.find((p: Professional) => p.id === selectedProfId);
     if (!matchedProf) return;
 
+    const isResponsavelTecnico = selectedLinkType.toLowerCase().includes('responsável técnico') || selectedLinkType.toLowerCase().includes('responsavel tecnico');
+
     const newLink: CompanyProfessional = {
       professional_id: selectedProfId,
       vinculo_type: selectedLinkType,
       name: matchedProf.name,
-      cpf: matchedProf.cpf
+      cpf: matchedProf.cpf,
+      area: isResponsavelTecnico ? selectedArea : null,
+      data_aprovacao: isResponsavelTecnico && selectedDataAprovacao ? selectedDataAprovacao : null,
+      numero_reuniao: isResponsavelTecnico ? selectedNumeroReuniao : null,
+      fundamento_legal: isResponsavelTecnico ? selectedFundamentoLegal : null,
     };
 
     setFormData({
@@ -166,6 +184,10 @@ export default function Companies() {
     });
     setProfessionalsError('');
     setSelectedProfId('');
+    setSelectedArea('');
+    setSelectedDataAprovacao('');
+    setSelectedNumeroReuniao('');
+    setSelectedFundamentoLegal('');
   };
 
   const handleRemoveProfessional = (profId: number) => {
@@ -177,36 +199,28 @@ export default function Companies() {
 
   const handleSave = async () => {
     // 1. Validation
-    let valid = true;
 
     if (!formData.razao_social.trim()) {
       showSnackbar('Razão Social é obrigatória', 'error');
-      valid = false;
       return;
     }
     if (!formData.nome_fantasia.trim()) {
       showSnackbar('Nome Fantasia é obrigatório', 'error');
-      valid = false;
       return;
     }
 
     if (!formData.cnpj.trim()) {
       setCnpjError('CNPJ é obrigatório');
-      valid = false;
       return;
     } else if (!validateCNPJ(formData.cnpj)) {
       setCnpjError('CNPJ inválido');
-      valid = false;
       return;
     }
 
     if (!formData.professionals || formData.professionals.length === 0) {
       setProfessionalsError('A empresa precisa de pelo menos um profissional vinculado.');
-      valid = false;
       return;
     }
-
-    if (!valid) return;
 
     setLoading(true);
     try {
@@ -219,9 +233,10 @@ export default function Companies() {
       }
       setOpen(false);
       fetchData();
-    } catch (error: any) {
-      console.error('Erro ao salvar empresa', error);
-      showSnackbar(error.response?.data?.error || 'Erro ao salvar empresa', 'error');
+    } catch (error) {
+      const err = error as any;
+      console.error('Erro ao salvar empresa', err);
+      showSnackbar(err.response?.data?.error || 'Erro ao salvar empresa', 'error');
     } finally {
       setLoading(false);
     }
@@ -233,15 +248,12 @@ export default function Companies() {
         await deleteCompany(id);
         showSnackbar('Empresa excluída com sucesso', 'success');
         fetchData();
-      } catch (error: any) {
-        console.error('Erro ao excluir empresa', error);
-        showSnackbar(error.response?.data?.error || 'Erro ao excluir empresa', 'error');
+      } catch (error) {
+        const err = error as any;
+        console.error('Erro ao excluir empresa', err);
+        showSnackbar(err.response?.data?.error || 'Erro ao excluir empresa', 'error');
       }
     }
-  };
-
-  const showSnackbar = (message: string, severity: 'success' | 'error') => {
-    setSnackbar({ open: true, message, severity });
   };
 
   const handleCloseSnackbar = () => {
@@ -279,8 +291,9 @@ export default function Companies() {
                 <TableCell>
                   {comp.professionals && comp.professionals.length > 0 ? (
                     comp.professionals.map((p: CompanyProfessional, idx: number) => (
-                      <div key={idx} style={{ fontSize: '0.85rem' }}>
+                      <div key={idx} style={{ fontSize: '0.85rem', marginBottom: '4px' }}>
                         👤 <strong>{p.name}</strong> ({p.vinculo_type})
+                        {p.area && <div style={{ marginLeft: '16px', color: '#666' }}>Área: {p.area} | Aprov: {p.data_aprovacao ? new Date(p.data_aprovacao).toLocaleDateString('pt-BR') : '-'} | Reunião: {p.numero_reuniao}</div>}
                       </div>
                     ))
                   ) : (
@@ -387,7 +400,18 @@ export default function Companies() {
                   </MenuItem>
                 ))}
               </TextField>
+            </Box>
 
+            {(selectedLinkType.toLowerCase().includes('responsável técnico') || selectedLinkType.toLowerCase().includes('responsavel tecnico')) && (
+              <Box sx={{ display: 'grid', gridTemplateColumns: { xs: '1fr', md: '1fr 1fr' }, gap: 2, mb: 2 }}>
+                <TextField label="Área" value={selectedArea} onChange={(e) => setSelectedArea(e.target.value)} fullWidth />
+                <TextField label="Data de Aprovação" type="date" value={selectedDataAprovacao} onChange={(e) => setSelectedDataAprovacao(e.target.value)} InputLabelProps={{ shrink: true }} fullWidth />
+                <TextField label="Nº da Reunião" value={selectedNumeroReuniao} onChange={(e) => setSelectedNumeroReuniao(e.target.value)} fullWidth />
+                <TextField label="Fundamento Legal" value={selectedFundamentoLegal} onChange={(e) => setSelectedFundamentoLegal(e.target.value)} fullWidth />
+              </Box>
+            )}
+
+            <Box sx={{ display: 'flex', justifyContent: 'flex-end', gap: 2, mt: -1 }}>
               <Button
                 variant="contained"
                 color="secondary"
@@ -411,7 +435,15 @@ export default function Companies() {
                     <ListItem key={prof.professional_id}>
                       <ListItemText
                         primary={prof.name}
-                        secondary={`Tipo de Vínculo: ${prof.vinculo_type}`}
+                        secondary={
+                          <>
+                            <div>Tipo de Vínculo: {prof.vinculo_type}</div>
+                            {prof.area && <div>Área: {prof.area}</div>}
+                            {prof.data_aprovacao && <div>Data de Aprovação: {prof.data_aprovacao}</div>}
+                            {prof.numero_reuniao && <div>Nº Reunião: {prof.numero_reuniao}</div>}
+                            {prof.fundamento_legal && <div>Fundamento Legal: {prof.fundamento_legal}</div>}
+                          </>
+                        }
                       />
                       <ListItemSecondaryAction>
                         <IconButton edge="end" aria-label="delete" onClick={() => handleRemoveProfessional(prof.professional_id)}>

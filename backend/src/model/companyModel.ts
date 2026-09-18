@@ -6,6 +6,10 @@ export interface CompanyProfessional {
   vinculo_type: string;
   name?: string;
   cpf?: string;
+  area?: string | null;
+  data_aprovacao?: Date | string | null;
+  numero_reuniao?: string | null;
+  fundamento_legal?: string | null;
 }
 
 export interface Company {
@@ -49,7 +53,7 @@ export const getAllCompanies = async (): Promise<Company[]> => {
 
   for (const company of companies) {
     const [profRows] = await pool.query<RowDataPacket[]>(`
-      SELECT cp.professional_id, cp.vinculo_type, p.name, p.cpf
+      SELECT cp.professional_id, cp.vinculo_type, p.name, p.cpf, cp.area, cp.data_aprovacao, cp.numero_reuniao, cp.fundamento_legal
       FROM company_professionals cp
       JOIN professionals p ON cp.professional_id = p.id
       WHERE cp.company_id = ?
@@ -68,7 +72,7 @@ export const getCompanyById = async (id: number): Promise<Company | null> => {
   const company = rows[0] as Company;
 
   const [profRows] = await pool.query<RowDataPacket[]>(`
-    SELECT cp.professional_id, cp.vinculo_type, p.name, p.cpf
+    SELECT cp.professional_id, cp.vinculo_type, p.name, p.cpf, cp.area, cp.data_aprovacao, cp.numero_reuniao, cp.fundamento_legal
     FROM company_professionals cp
     JOIN professionals p ON cp.professional_id = p.id
     WHERE cp.company_id = ?
@@ -126,11 +130,19 @@ export const createCompany = async (companyData: Company): Promise<number> => {
 
     if (professionals && professionals.length > 0) {
       const linkQuery = `
-        INSERT INTO company_professionals (company_id, professional_id, vinculo_type)
-        VALUES (?, ?, ?)
+        INSERT INTO company_professionals (company_id, professional_id, vinculo_type, area, data_aprovacao, numero_reuniao, fundamento_legal)
+        VALUES (?, ?, ?, ?, ?, ?, ?)
       `;
       for (const p of professionals) {
-        await connection.query(linkQuery, [companyId, p.professional_id, p.vinculo_type]);
+        await connection.query(linkQuery, [
+          companyId,
+          p.professional_id,
+          p.vinculo_type,
+          p.area || null,
+          p.data_aprovacao || null,
+          p.numero_reuniao || null,
+          p.fundamento_legal || null
+        ]);
       }
     }
 
@@ -176,11 +188,19 @@ export const updateCompany = async (id: number, companyData: Partial<Company>): 
 
       if (companyData.professionals.length > 0) {
         const linkQuery = `
-          INSERT INTO company_professionals (company_id, professional_id, vinculo_type)
-          VALUES (?, ?, ?)
+          INSERT INTO company_professionals (company_id, professional_id, vinculo_type, area, data_aprovacao, numero_reuniao, fundamento_legal)
+          VALUES (?, ?, ?, ?, ?, ?, ?)
         `;
         for (const p of companyData.professionals) {
-          await connection.query(linkQuery, [id, p.professional_id, p.vinculo_type]);
+          await connection.query(linkQuery, [
+            id,
+            p.professional_id,
+            p.vinculo_type,
+            p.area || null,
+            p.data_aprovacao || null,
+            p.numero_reuniao || null,
+            p.fundamento_legal || null
+          ]);
         }
       }
     }

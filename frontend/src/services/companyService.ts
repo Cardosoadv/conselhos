@@ -5,6 +5,10 @@ export interface CompanyProfessional {
   vinculo_type: string;
   name?: string;
   cpf?: string;
+  area?: string | null;
+  data_aprovacao?: string | null;
+  numero_reuniao?: string | null;
+  fundamento_legal?: string | null;
 }
 
 export interface Company {
